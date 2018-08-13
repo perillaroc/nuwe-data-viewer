@@ -6,28 +6,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1701</width>
-    <height>908</height>
+    <width>1584</width>
+    <height>823</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>NUWE Data Viewer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QSplitter" name="splitter_2">
+     <widget class="QSplitter" name="table_viewer_splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QListView" name="project_view"/>
-      <widget class="QSplitter" name="splitter">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <widget class="QTableWidget" name="file_content_widget"/>
-       <widget class="QTextBrowser" name="message_content_widget"/>
-      </widget>
+      <widget class="QTableWidget" name="file_content_widget"/>
+      <widget class="QTextBrowser" name="message_content_widget"/>
      </widget>
     </item>
    </layout>
@@ -37,7 +31,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1701</width>
+     <width>1584</width>
      <height>37</height>
     </rect>
    </property>
