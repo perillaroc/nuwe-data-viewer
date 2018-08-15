@@ -2,7 +2,7 @@
 import sys
 
 
-def run_app():
+def run_app(config_file):
     from PyQt5.QtWidgets import QApplication
     from PyQt5.QtCore import Qt
     from .mainwindow import MainWindow
@@ -10,6 +10,7 @@ def run_app():
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     app = QApplication(sys.argv)
     main_window = MainWindow()
+    main_window.load_config(config_file)
     main_window.show()
 
     sys.exit(app.exec_())

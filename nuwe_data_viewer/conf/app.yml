@@ -1,0 +1,3 @@
+program:
+  grib_ls: grib ls path
+  grib_dump: grib dump path

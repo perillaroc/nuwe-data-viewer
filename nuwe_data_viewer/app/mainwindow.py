@@ -1,4 +1,5 @@
 # coding: utf-8
+import yaml
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
@@ -6,6 +7,7 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import Qt, QFileInfo
 
 from .ui.UI_mainwindow import Ui_MainWindow
+from nuwe_data_viewer.lib.core.grib_meta_data import GribMetaData
 
 
 class MainWindow(QMainWindow):
@@ -23,6 +25,7 @@ class MainWindow(QMainWindow):
         self.ui.action_exit.triggered.connect(self.close)
 
         # variable
+        self.config = None
         self.project_model = QStandardItemModel(self)
         self.file_content_model = QStandardItemModel(self)
         self.message_content_model = QStandardItemModel(self)
@@ -34,6 +37,11 @@ class MainWindow(QMainWindow):
         self.addDockWidget(Qt.LeftDockWidgetArea, self.project_view_widget)
         self.project_view_widget.signal_file_clicked.connect(self.slot_file_clicked)
 
+    def load_config(self, config_file):
+        with open(config_file) as f:
+            config = yaml.load(f)
+            self.config = config
+
     @pyqtSlot(bool)
     def on_open_file(self, checked):
         file_path, file_type = QFileDialog.getOpenFileName(self, "Open a grib2 file")
@@ -43,3 +51,6 @@ class MainWindow(QMainWindow):
     @pyqtSlot(QFileInfo)
     def slot_file_clicked(self, file_info: QFileInfo):
         print(file_info.fileName())
+        grib_meta_data = GribMetaData(self.config)
+        grib_meta_data.set_file_path(file_info.filePath())
+        grib_meta_data.get_grib_ls_output()
