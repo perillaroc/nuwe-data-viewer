@@ -53,4 +53,5 @@ class MainWindow(QMainWindow):
         print(file_info.fileName())
         grib_meta_data = GribMetaData(self.config)
         grib_meta_data.set_file_path(file_info.filePath())
-        grib_meta_data.get_grib_ls_output()
+        # grib_meta_data.get_grib_ls_output()
+        grib_info = grib_meta_data.get_grib_info()

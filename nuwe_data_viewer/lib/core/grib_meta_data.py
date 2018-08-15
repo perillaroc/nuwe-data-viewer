@@ -1,5 +1,19 @@
 # coding: utf-8
 import subprocess
+import nuwe_pyeccodes
+
+key_list = [
+    'edition',
+    'centre',
+    'date',
+    'dataType',
+    'gridType',
+    'typeOfLevel',
+    'level',
+    'stepRange',
+    'shortName',
+    'packingType'
+]
 
 
 class GribMetaData(object):
@@ -22,3 +36,20 @@ class GribMetaData(object):
         stderr = result.stderr
         print(stdout.decode('gbk'))
         print(stderr.decode('gbk'))
+
+    def get_grib_info(self):
+        grib_file = nuwe_pyeccodes.GribFileHandler()
+        grib_file.openFile(self.file_path)
+        grib_message = grib_file.next()
+        grib_info = []
+        while grib_message:
+            message_info = []
+            for a_key in key_list:
+                value = grib_message.getString(a_key)
+                message_info.append({
+                    'key': a_key,
+                    'value': value
+                })
+            grib_info.append(message_info)
+            grib_message = grib_file.next()
+        return grib_info
