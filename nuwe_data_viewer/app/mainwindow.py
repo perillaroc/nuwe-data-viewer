@@ -7,7 +7,7 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import Qt, QFileInfo
 
 from .ui.UI_mainwindow import Ui_MainWindow
-from nuwe_data_viewer.lib.core.grib_meta_data import GribMetaData
+from nuwe_data_viewer.lib.core.grib_meta_data import GribMetaData, key_list
 
 
 class MainWindow(QMainWindow):
@@ -29,6 +29,8 @@ class MainWindow(QMainWindow):
         self.project_model = QStandardItemModel(self)
         self.file_content_model = QStandardItemModel(self)
         self.message_content_model = QStandardItemModel(self)
+
+        self.ui.file_content_widget.setModel(self.file_content_model)
 
         # init views
         from .views.project_view_widget import ProjectViewWidget
@@ -53,5 +55,19 @@ class MainWindow(QMainWindow):
         print(file_info.fileName())
         grib_meta_data = GribMetaData(self.config)
         grib_meta_data.set_file_path(file_info.filePath())
-        # grib_meta_data.get_grib_ls_output()
         grib_info = grib_meta_data.get_grib_info()
+
+        self.file_content_model.clear()
+
+        cur_index = 0
+        for a_key in key_list:
+            self.file_content_model.setHeaderData(cur_index, Qt.Horizontal, a_key)
+            cur_index += 1
+        for a_message_info in grib_info:
+            message_row = []
+            for prop in a_message_info:
+                key_item = QStandardItem(prop['key'])
+                value_item = QStandardItem(prop['value'])
+                message_row.append(value_item)
+            self.file_content_model.appendRow(message_row)
+

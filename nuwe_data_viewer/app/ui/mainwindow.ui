@@ -20,7 +20,7 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QTableWidget" name="file_content_widget"/>
+      <widget class="QTreeView" name="file_content_widget"/>
       <widget class="QTextBrowser" name="message_content_widget"/>
      </widget>
     </item>
