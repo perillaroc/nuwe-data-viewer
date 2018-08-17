@@ -1,5 +1,6 @@
 # coding: utf-8
 import yaml
+from enum import Enum
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
@@ -8,6 +9,10 @@ from PyQt5.QtCore import Qt, QFileInfo
 
 from .ui.UI_mainwindow import Ui_MainWindow
 from nuwe_data_viewer.lib.core.grib_meta_data import GribMetaData, key_list
+
+
+class FileContentItemModel(Enum):
+    MESSAGE_COUNT = Qt.UserRole + 201
 
 
 class MainWindow(QMainWindow):
@@ -60,14 +65,19 @@ class MainWindow(QMainWindow):
         self.file_content_model.clear()
 
         cur_index = 0
-        for a_key in key_list:
+        extended_key_list = ['No']
+        extended_key_list.extend(key_list)
+        self.file_content_model.setColumnCount(len(extended_key_list))
+        for a_key in extended_key_list:
             self.file_content_model.setHeaderData(cur_index, Qt.Horizontal, a_key)
             cur_index += 1
+        cur_index = 1
         for a_message_info in grib_info:
-            message_row = []
+            message_row = [QStandardItem(str(cur_index))]
             for prop in a_message_info:
-                key_item = QStandardItem(prop['key'])
                 value_item = QStandardItem(prop['value'])
                 message_row.append(value_item)
+            # message_row[0].setData(cur_index, FileContentItemModel.MESSAGE_COUNT.value)
             self.file_content_model.appendRow(message_row)
+            cur_index += 1
 
