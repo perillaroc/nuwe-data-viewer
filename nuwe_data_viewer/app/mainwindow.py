@@ -5,7 +5,7 @@ from enum import Enum
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from PyQt5.QtCore import Qt, QFileInfo
+from PyQt5.QtCore import Qt, QFileInfo, QModelIndex
 
 from .ui.UI_mainwindow import Ui_MainWindow
 from nuwe_data_viewer.lib.core.grib_meta_data import GribMetaData, key_list
@@ -28,10 +28,12 @@ class MainWindow(QMainWindow):
         # connection
         self.ui.action_open.triggered.connect(self.on_open_file)
         self.ui.action_exit.triggered.connect(self.close)
+        self.ui.file_content_widget.clicked.connect(self.slot_file_content_view_clicked)
 
         # variable
         self.config = None
         self.project_model = QStandardItemModel(self)
+        self.file_info = None
         self.file_content_model = QStandardItemModel(self)
         self.message_content_model = QStandardItemModel(self)
 
@@ -57,6 +59,7 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot(QFileInfo)
     def slot_file_clicked(self, file_info: QFileInfo):
+        self.file_info = file_info
         print(file_info.fileName())
         grib_meta_data = GribMetaData(self.config)
         grib_meta_data.set_file_path(file_info.filePath())
@@ -77,7 +80,16 @@ class MainWindow(QMainWindow):
             for prop in a_message_info:
                 value_item = QStandardItem(prop['value'])
                 message_row.append(value_item)
-            # message_row[0].setData(cur_index, FileContentItemModel.MESSAGE_COUNT.value)
             self.file_content_model.appendRow(message_row)
             cur_index += 1
+
+    @pyqtSlot(QModelIndex)
+    def slot_file_content_view_clicked(self, model_index):
+        number_item = self.file_content_model.item(model_index.row(), 0)
+        message_number = number_item.text()
+
+        grib_meta_data = GribMetaData(self.config)
+        grib_meta_data.set_file_path(self.file_info.filePath())
+        stdout,stderr = grib_meta_data.get_grib_dump_output(message_number)
+        self.ui.message_content_widget.setText(stdout)
 
