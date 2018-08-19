@@ -15,8 +15,9 @@ class ProjectItemType(Enum):
 
 
 class ProjectModel(QStandardItemModel):
-    def __init__(self, parent=None):
+    def __init__(self, config, parent=None):
         super(QStandardItemModel, self).__init__(parent)
+        self.config = config
 
     def add_item(self, item_type: ProjectItemType, item):
         if item_type == ProjectItemType.GribFile:
