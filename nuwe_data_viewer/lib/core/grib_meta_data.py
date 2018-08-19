@@ -1,5 +1,7 @@
 # coding: utf-8
 import subprocess
+import sys
+
 import nuwe_pyeccodes
 
 key_list = [
@@ -68,8 +70,8 @@ class GribMetaData(object):
             stderr=subprocess.PIPE
         )
 
-        stdout = result.stdout.decode('gbk')
-        stderr = result.stderr.decode('gbk')
-        print(stdout)
+        stdout = result.stdout.decode(sys.stdout.encoding)
+        stderr = result.stderr.decode(sys.stderr.encoding)
+        # print(stdout)
         print(stderr)
         return stdout, stderr
