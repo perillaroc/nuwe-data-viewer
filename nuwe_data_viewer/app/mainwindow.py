@@ -9,7 +9,8 @@ from PyQt5.QtCore import Qt, QFileInfo, QModelIndex
 
 from .ui.UI_mainwindow import Ui_MainWindow
 from nuwe_data_viewer.lib.core.project_model import ProjectModel
-from nuwe_data_viewer.lib.core.grib_meta_data import GribMetaData, key_list
+from nuwe_data_viewer.lib.core.file_content_model import FileContentModel
+from nuwe_data_viewer.lib.core.grib_meta_data import GribMetaData
 
 
 class FileContentItemModel(Enum):
@@ -35,7 +36,7 @@ class MainWindow(QMainWindow):
         self.config = None
         self.project_model = ProjectModel(self)
         self.file_info = None
-        self.file_content_model = QStandardItemModel(self)
+        self.file_content_model = FileContentModel(self)
         self.message_content_model = QStandardItemModel(self)
 
         self.ui.file_content_widget.setModel(self.file_content_model)
@@ -61,28 +62,7 @@ class MainWindow(QMainWindow):
     @pyqtSlot(QFileInfo)
     def slot_file_clicked(self, file_info: QFileInfo):
         self.file_info = file_info
-        print(file_info.fileName())
-        grib_meta_data = GribMetaData(self.config)
-        grib_meta_data.set_file_path(file_info.filePath())
-        grib_info = grib_meta_data.get_grib_info()
-
-        self.file_content_model.clear()
-
-        cur_index = 0
-        extended_key_list = ['No']
-        extended_key_list.extend(key_list)
-        self.file_content_model.setColumnCount(len(extended_key_list))
-        for a_key in extended_key_list:
-            self.file_content_model.setHeaderData(cur_index, Qt.Horizontal, a_key)
-            cur_index += 1
-        cur_index = 1
-        for a_message_info in grib_info:
-            message_row = [QStandardItem(str(cur_index))]
-            for prop in a_message_info:
-                value_item = QStandardItem(prop['value'])
-                message_row.append(value_item)
-            self.file_content_model.appendRow(message_row)
-            cur_index += 1
+        self.file_content_model.set_file_info(file_info)
 
     @pyqtSlot(QModelIndex)
     def slot_file_content_view_clicked(self, model_index):
