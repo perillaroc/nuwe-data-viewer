@@ -8,6 +8,7 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import Qt, QFileInfo, QModelIndex
 
 from .ui.UI_mainwindow import Ui_MainWindow
+from nuwe_data_viewer.lib.core.project_model import ProjectModel
 from nuwe_data_viewer.lib.core.grib_meta_data import GribMetaData, key_list
 
 
@@ -32,7 +33,7 @@ class MainWindow(QMainWindow):
 
         # variable
         self.config = None
-        self.project_model = QStandardItemModel(self)
+        self.project_model = ProjectModel(self)
         self.file_info = None
         self.file_content_model = QStandardItemModel(self)
         self.message_content_model = QStandardItemModel(self)
