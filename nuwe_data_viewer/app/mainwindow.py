@@ -23,8 +23,6 @@ class MainWindow(QMainWindow):
         # ui
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.ui.table_viewer_splitter.setStretchFactor(0, 1)
-        self.ui.table_viewer_splitter.setStretchFactor(1, 3)
 
         # connection
         self.ui.action_open.triggered.connect(self.on_open_file)
