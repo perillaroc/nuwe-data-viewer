@@ -8,7 +8,7 @@ from nuwe_data_viewer.lib.core.project_model import ProjectModel, ProjectItemTyp
 
 
 class ProjectViewWidget(QDockWidget):
-    signal_file_clicked = pyqtSignal(QFileInfo)
+    signal_grib_file_clicked = pyqtSignal(QFileInfo)
 
     def __init__(self, parent=None):
         super(QDockWidget, self).__init__(parent)
@@ -30,6 +30,11 @@ class ProjectViewWidget(QDockWidget):
 
     @pyqtSlot(QModelIndex)
     def slot_project_view_clicked(self, index: QModelIndex):
-        item = self.project_model.itemFromIndex(index)
-        file_info = item.data(ProjectModelDataType.FileInfoType.value)
-        self.signal_file_clicked.emit(file_info)
+        item_type = self.project_model.get_item_type(index)
+
+        if item_type == ProjectItemType.GribFile:
+            item = self.project_model.itemFromIndex(index)
+            file_info = item.data(ProjectModelDataType.FileInfoType.value)
+            self.signal_grib_file_clicked.emit(file_info)
+        else:
+            print("item_type not supported", item_type)

@@ -4,14 +4,12 @@ from enum import Enum
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
-from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtCore import Qt, QFileInfo, QModelIndex
 
 from .ui.UI_mainwindow import Ui_MainWindow
 from nuwe_data_viewer.lib.core.project_model import ProjectModel
 from nuwe_data_viewer.lib.core.file_content_model import FileContentModel
 from nuwe_data_viewer.lib.core.message_content_model import MessageContentModel
-from nuwe_data_viewer.lib.core.grib_meta_data import GribMetaData
 
 
 class FileContentItemModel(Enum):
@@ -47,7 +45,7 @@ class MainWindow(QMainWindow):
         self.project_view_widget = ProjectViewWidget(self)
         self.project_view_widget.set_project_model(self.project_model)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.project_view_widget)
-        self.project_view_widget.signal_file_clicked.connect(self.slot_file_clicked)
+        self.project_view_widget.signal_grib_file_clicked.connect(self.slot_file_clicked)
 
     def load_config(self, config_file):
         with open(config_file) as f:

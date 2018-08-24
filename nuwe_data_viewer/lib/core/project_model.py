@@ -1,7 +1,7 @@
 # coding: utf-8
 from enum import Enum
 
-from PyQt5.QtCore import Qt, QFileInfo
+from PyQt5.QtCore import Qt, QFileInfo, QModelIndex
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
 
@@ -26,3 +26,8 @@ class ProjectModel(QStandardItemModel):
             model_item.setData(ProjectItemType.GribFile, ProjectModelDataType.ItemType.value)
             model_item.setData(file_info, ProjectModelDataType.FileInfoType.value)
             self.appendRow(model_item)
+
+    def get_item_type(self, model_index: QModelIndex):
+        model_item = self.itemFromIndex(model_index)
+        model_type = model_item.data(ProjectModelDataType.ItemType.value)
+        return model_type
