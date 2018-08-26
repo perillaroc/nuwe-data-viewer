@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog
 from PyQt5.QtCore import Qt, QFileInfo, QModelIndex
 
 from .ui.UI_mainwindow import Ui_MainWindow
+from .ui.file_content_widget import FileContentWidget
 from nuwe_data_viewer.lib.core.project_model import ProjectModel
 from nuwe_data_viewer.lib.core.file_content_model import FileContentModel
 from nuwe_data_viewer.lib.core.message_content_model import MessageContentModel
@@ -23,20 +24,17 @@ class MainWindow(QMainWindow):
         # ui
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.central_widget = None
 
         # connection
         self.ui.action_open.triggered.connect(self.on_open_file)
         self.ui.action_exit.triggered.connect(self.close)
-        self.ui.file_content_widget.clicked.connect(self.slot_file_content_view_clicked)
 
         # variable
         self.config = None
         self.project_model = ProjectModel(self.config, self)
-        self.file_info = None
         self.file_content_model = FileContentModel(self.config, self)
         self.message_content_model = MessageContentModel(self.config, self)
-
-        self.ui.file_content_widget.setModel(self.file_content_model)
 
         # init views
         from .views.project_view_widget import ProjectViewWidget
@@ -61,14 +59,7 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot(QFileInfo)
     def slot_file_clicked(self, file_info: QFileInfo):
-        self.file_info = file_info
-        self.file_content_model.set_file_info(file_info)
-
-    @pyqtSlot(QModelIndex)
-    def slot_file_content_view_clicked(self, model_index):
-        number_item = self.file_content_model.item(model_index.row(), 0)
-        message_number = number_item.text()
-
-        stdout = self.message_content_model.set_message(self.file_info, message_number)
-        self.ui.message_content_widget.setText(stdout)
+        file_content_widget = FileContentWidget(self.config, self)
+        self.setCentralWidget(file_content_widget)
+        file_content_widget.set_file_info(file_info)
 
