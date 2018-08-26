@@ -29,6 +29,7 @@ class FileContentWidget(QWidget):
 
     def set_file_content_model(self, file_content_model: FileContentModel):
         self.file_content_model = file_content_model
+        self.ui.file_content_widget.setModel(self.file_content_model)
 
     def set_message_content_model(self, message_content_model: MessageContentModel):
         self.message_content_model = message_content_model

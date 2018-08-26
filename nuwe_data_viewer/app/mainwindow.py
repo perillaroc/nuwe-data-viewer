@@ -33,8 +33,6 @@ class MainWindow(QMainWindow):
         # variable
         self.config = None
         self.project_model = ProjectModel(self.config, self)
-        self.file_content_model = FileContentModel(self.config, self)
-        self.message_content_model = MessageContentModel(self.config, self)
 
         # init views
         from .views.project_view_widget import ProjectViewWidget
