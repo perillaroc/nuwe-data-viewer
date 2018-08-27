@@ -46,8 +46,6 @@ class MainWindow(QMainWindow):
             config = yaml.load(f)
             self.config = config
             self.project_model.config = self.config
-            self.file_content_model.config = self.config
-            self.message_content_model.config = self.config
 
     @pyqtSlot(bool)
     def on_open_file(self, checked):
