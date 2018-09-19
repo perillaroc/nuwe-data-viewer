@@ -4,13 +4,11 @@ from enum import Enum
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
-from PyQt5.QtCore import Qt, QFileInfo, QModelIndex
+from PyQt5.QtCore import Qt, QFileInfo
 
 from .ui.UI_mainwindow import Ui_MainWindow
-from .ui.file_content_widget import FileContentWidget
+from nuwe_data_viewer.app.widgets.file_content_widget import FileContentWidget
 from nuwe_data_viewer.lib.core.project_model import ProjectModel
-from nuwe_data_viewer.lib.core.file_content_model import FileContentModel
-from nuwe_data_viewer.lib.core.message_content_model import MessageContentModel
 
 
 class FileContentItemModel(Enum):

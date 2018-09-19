@@ -26,6 +26,8 @@ class ProjectModel(QStandardItemModel):
             model_item.setData(ProjectItemType.GribFile, ProjectModelDataType.ItemType.value)
             model_item.setData(file_info, ProjectModelDataType.FileInfoType.value)
             self.appendRow(model_item)
+        else:
+            raise TypeError("item type not supported:", item_type)
 
     def get_item_type(self, model_index: QModelIndex):
         model_item = self.itemFromIndex(model_index)

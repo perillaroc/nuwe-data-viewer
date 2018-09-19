@@ -1,10 +1,13 @@
 # coding: utf-8
+"""
+View Grib2 File contents in a table view.
+"""
 
-from PyQt5.QtCore import pyqtSlot, pyqtSignal, QModelIndex, QFileInfo
+from PyQt5.QtCore import pyqtSlot, QModelIndex, QFileInfo
 from PyQt5.QtWidgets import QWidget
 
 
-from .UI_file_content_widget import Ui_FileContentWidget
+from nuwe_data_viewer.app.widgets.UI_file_content_widget import Ui_FileContentWidget
 
 from nuwe_data_viewer.lib.core.file_content_model import FileContentModel
 from nuwe_data_viewer.lib.core.message_content_model import MessageContentModel

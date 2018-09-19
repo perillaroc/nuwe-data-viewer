@@ -1,5 +1,4 @@
 # coding: utf-8
-
 from PyQt5.QtCore import pyqtSlot, pyqtSignal, QFileInfo, QModelIndex
 from PyQt5.QtWidgets import QDockWidget
 
@@ -8,6 +7,9 @@ from nuwe_data_viewer.lib.core.project_model import ProjectModel, ProjectItemTyp
 
 
 class ProjectViewWidget(QDockWidget):
+    """
+    Tree-like project view widget
+    """
     signal_grib_file_clicked = pyqtSignal(QFileInfo)
 
     def __init__(self, parent=None):
