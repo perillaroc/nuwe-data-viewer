@@ -3,8 +3,8 @@
 View Grib2 File contents in a table view.
 """
 
-from PyQt5.QtCore import pyqtSlot, QModelIndex, QFileInfo
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtCore import pyqtSlot, QModelIndex, QFileInfo, QPoint
+from PyQt5.QtWidgets import QWidget, QAction, QMenu
 
 
 from nuwe_data_viewer.app.widgets.UI_file_content_widget import Ui_FileContentWidget
