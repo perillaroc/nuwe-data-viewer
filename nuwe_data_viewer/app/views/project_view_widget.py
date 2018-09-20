@@ -11,6 +11,7 @@ class ProjectViewWidget(QDockWidget):
     Tree-like project view widget
     """
     signal_grib_file_clicked = pyqtSignal(QFileInfo)
+    signal_grib_file_show_chart_clicked = pyqtSignal(QFileInfo)
 
     def __init__(self, parent=None):
         super(QDockWidget, self).__init__(parent)
@@ -62,4 +63,10 @@ class ProjectViewWidget(QDockWidget):
         actions.append(action_show_file_viewer)
 
         result_action = QMenu.exec(actions, self.ui.project_view.mapToGlobal(point))
-        print(result_action)
+        if result_action == action_show_file_viewer:
+            item_type = self.project_model.get_item_type(index)
+
+            if item_type == ProjectItemType.GribFile:
+                item = self.project_model.itemFromIndex(index)
+                file_info = item.data(ProjectModelDataType.FileInfoType.value)
+                self.signal_grib_file_show_chart_clicked.emit(file_info)
