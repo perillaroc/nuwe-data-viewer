@@ -1,14 +1,11 @@
 # coding: utf-8
-from PyQt5.QtCore import pyqtSlot, QModelIndex, QFileInfo, QPoint
-from PyQt5.QtWidgets import QWidget, QAction, QMenu, QGridLayout, QVBoxLayout
+from PyQt5.QtCore import pyqtSlot, QModelIndex, QFileInfo
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
 import numpy as np
-
-import matplotlib
-matplotlib.use('Qt5Agg')
-from matplotlib.backends.backend_qt5agg import FigureCanvasQT
-from matplotlib.figure import Figure
+import cartopy.crs as ccrs
 
 from nuwe_data_viewer.lib.core.file_content_model import FileContentModel
+from nuwe_data_viewer.app.components.plot_widget import ChartWidget
 from .UI_file_visual_widget import Ui_FileVisualWidget
 
 
@@ -25,12 +22,8 @@ class FileVisualWidget(QWidget):
         self.ui.splitter.setStretchFactor(1, 3)
 
         layout = QVBoxLayout(self.ui.chart_frame)
-        self.canvas = FigureCanvasQT(Figure(figsize=(5, 3)))
-        layout.addWidget(self.canvas)
-
-        self._static_ax = self.canvas.figure.subplots()
-        t = np.linspace(0, 10, 501)
-        self._static_ax.plot(t, np.tan(t), ".")
+        self.chart_widget = ChartWidget(self)
+        layout.addWidget(self.chart_widget)
 
         self.ui.file_content_widget.setModel(self.file_content_model)
         self.ui.file_content_widget.clicked.connect(self.slot_file_content_view_clicked)
@@ -47,5 +40,9 @@ class FileVisualWidget(QWidget):
         number_item = self.file_content_model.item(model_index.row(), 0)
         message_number = number_item.text()
 
-        # stdout = self.message_content_model.set_message(self.file_content_model.file_info, message_number)
-        # self.ui.message_content_widget.setText(stdout)
+        x = range(0, 10)
+        y = range(0, 20, 2)
+        self.chart_widget.canvas.fig.clf()
+        self.chart_widget.canvas.ax = self.chart_widget.canvas.fig.add_subplot(111, projection=ccrs.PlateCarree())
+        self.chart_widget.canvas.ax.coastlines()
+        self.chart_widget.canvas.draw()
