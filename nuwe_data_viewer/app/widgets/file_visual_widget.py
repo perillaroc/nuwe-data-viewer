@@ -1,7 +1,7 @@
 # coding: utf-8
 from PyQt5.QtCore import pyqtSlot, QModelIndex, QFileInfo
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
-import numpy as np
+import nuwe_pyeccodes
 
 from nuwe_data_viewer.lib.core.file_content_model import FileContentModel
 from nuwe_data_viewer.app.components.plot_widget import PlotWidget
@@ -35,8 +35,21 @@ class FileVisualWidget(QWidget):
         self.file_content_model.set_file_info(file_info)
 
     @pyqtSlot(QModelIndex)
-    def slot_file_content_view_clicked(self, model_index):
+    def slot_file_content_view_clicked(self, model_index: QModelIndex):
         number_item = self.file_content_model.item(model_index.row(), 0)
-        message_number = number_item.text()
+        message_number = int(number_item.text())
 
-        self.plot_widget.plot()
+        # get grib message from file
+        file_info = self.file_content_model.file_info
+        grib_file = nuwe_pyeccodes.GribFileHandler()
+        grib_file.openFile(file_info.absoluteFilePath())
+        grib_message = None
+        for i in range(0, message_number):
+            grib_message = grib_file.next()
+
+        if grib_message is None:
+            print("ERROR when loading message: ", message_number)
+            return
+            
+        # plot message
+        self.plot_widget.plot(grib_message)
