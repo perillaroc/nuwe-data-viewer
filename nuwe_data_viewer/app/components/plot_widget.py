@@ -1,4 +1,5 @@
 # coding: utf-8
+import datetime
 from PyQt5 import QtWidgets
 
 import numpy as np
@@ -16,8 +17,6 @@ matplotlib.use('Qt5Agg')
 class PlotCanvas(Canvas):
     def __init__(self):
         self.fig = Figure()
-        self.ax = self.fig.add_subplot(111)
-        # self.ax.hold(False)
 
         Canvas.__init__(self, self.fig)
         Canvas.setSizePolicy(self, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -33,6 +32,7 @@ class PlotWidget(QtWidgets.QWidget):
         self.setLayout(self.layout)
 
     def plot(self, grib_message: nuwe_pyeccodes.GribMessageHandler):
+        print('get lon/lat begin:', datetime.datetime.utcnow())
         left_lon = grib_message.getDouble('longitudeOfFirstGridPointInDegrees')
         right_lon = grib_message.getDouble('longitudeOfLastGridPointInDegrees')
         lon_step = grib_message.getDouble('iDirectionIncrementInDegrees')
@@ -47,17 +47,25 @@ class PlotWidget(QtWidgets.QWidget):
 
         lons, lats = np.meshgrid(lon_array, lat_array)
 
+        print('get values begin:', datetime.datetime.utcnow())
+
         values = grib_message.getDoubleArray('values')
         grid_values = values.reshape(ny, nx)
 
+        print('plot begin:', datetime.datetime.utcnow())
         self.canvas.fig.clf()
-        self.canvas.ax = self.canvas.fig.add_subplot(111, projection=ccrs.PlateCarree())
+        self.canvas.ax = self.canvas.fig.add_subplot(
+            111,
+            projection=ccrs.PlateCarree(central_longitude=180))
+
         self.canvas.ax.contourf(
             lons, lats, grid_values,
             transform=ccrs.PlateCarree(),
             cmap='rainbow'
         )
+
         self.canvas.ax.coastlines()
         self.canvas.ax.gridlines()
 
         self.canvas.draw()
+        print('plot end:', datetime.datetime.utcnow())

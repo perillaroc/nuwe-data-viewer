@@ -17,8 +17,8 @@ class FileVisualWidget(QWidget):
 
         self.ui = Ui_FileVisualWidget()
         self.ui.setupUi(self)
-        self.ui.splitter.setStretchFactor(0, 1)
-        self.ui.splitter.setStretchFactor(1, 3)
+        self.ui.splitter.setStretchFactor(0, 3)
+        self.ui.splitter.setStretchFactor(1, 1)
 
         layout = QVBoxLayout(self.ui.chart_frame)
         self.plot_widget = PlotWidget(self)
