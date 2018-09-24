@@ -4,7 +4,7 @@ import sys
 
 import nuwe_pyeccodes
 
-key_list = [
+view_key_list = (
     'edition',
     'centre',
     'date',
@@ -15,7 +15,17 @@ key_list = [
     'stepRange',
     'shortName',
     'packingType'
-]
+)
+
+
+plot_key_list = (
+    'date',
+    'gridType',
+    'typeOfLevel',
+    'level',
+    'stepRange',
+    'shortName',
+)
 
 
 class GribMetaData(object):
@@ -26,7 +36,7 @@ class GribMetaData(object):
     def set_file_path(self, file_path):
         self.file_path = file_path
 
-    def get_grib_info(self):
+    def get_grib_info(self, key_list: list or set = view_key_list):
         grib_file = nuwe_pyeccodes.GribFileHandler()
         grib_file.openFile(self.file_path)
         grib_message = grib_file.next()

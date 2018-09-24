@@ -3,7 +3,7 @@
 from PyQt5.QtCore import Qt, QFileInfo
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
-from .grib_meta_data import GribMetaData, key_list
+from .grib_meta_data import GribMetaData, view_key_list
 
 
 class MessageContentModel(QStandardItemModel):

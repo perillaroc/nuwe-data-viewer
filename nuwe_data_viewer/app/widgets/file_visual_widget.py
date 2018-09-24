@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout
 import nuwe_pyeccodes
 
 from nuwe_data_viewer.lib.core.file_content_model import FileContentModel
+from nuwe_data_viewer.lib.core.grib_meta_data import plot_key_list
 from nuwe_data_viewer.app.components.plot_widget import PlotWidget
 from nuwe_data_viewer.app.components.grib.content_widget import ContentWidget
 from .UI_file_visual_widget import Ui_FileVisualWidget
@@ -14,7 +15,7 @@ class FileVisualWidget(QWidget):
         super(QWidget, self).__init__(parent)
         self.config = config
 
-        self.file_content_model = FileContentModel(self.config, self)
+        self.file_content_model = FileContentModel(config=self.config, parent=self, key_list=plot_key_list)
 
         self.ui = Ui_FileVisualWidget()
         self.ui.setupUi(self)
@@ -32,9 +33,9 @@ class FileVisualWidget(QWidget):
         self.content_widget.set_file_content_model(self.file_content_model)
         self.content_widget.signal_message_clicked.connect(self.slot_file_content_view_clicked)
 
-    def set_file_content_model(self, file_content_model: FileContentModel):
-        self.file_content_model = file_content_model
-        self.content_widget.set_file_content_model(self.file_content_model)
+    # def set_file_content_model(self, file_content_model: FileContentModel):
+    #     self.file_content_model = file_content_model
+    #     self.content_widget.set_file_content_model(self.file_content_model)
 
     def set_file_info(self, file_info: QFileInfo):
         self.file_content_model.set_file_info(file_info)
