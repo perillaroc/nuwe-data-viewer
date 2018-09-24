@@ -12,7 +12,7 @@ class MessageContentModel(QStandardItemModel):
         self.config = config
         self.file_info = None
 
-    def set_message(self, file_info: QFileInfo, message_index: str):
+    def set_message(self, file_info: QFileInfo, message_index: int):
         self.file_info = file_info
         grib_meta_data = GribMetaData(self.config)
         grib_meta_data.set_file_path(self.file_info.filePath())
