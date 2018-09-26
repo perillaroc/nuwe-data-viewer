@@ -11,6 +11,8 @@ import cartopy.crs as ccrs
 
 import nuwe_pyeccodes
 
+from .UI_plot_widget import Ui_PlotWidget
+
 
 matplotlib.use('Qt5Agg')
 
@@ -26,13 +28,15 @@ class PlotCanvas(Canvas):
 class PlotWidget(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(PlotWidget, self).__init__(parent)
+        self.ui = Ui_PlotWidget()
+
+        self.ui.setupUi(self)
+
         self.canvas = PlotCanvas()
         self.navigation_tool_bar = NavigationToolbar(self.canvas, self)
 
-        self.layout = QtWidgets.QVBoxLayout()
-        self.layout.addWidget(self.navigation_tool_bar)
-        self.layout.addWidget(self.canvas)
-        self.setLayout(self.layout)
+        self.ui.navi_bar_layout.addWidget(self.navigation_tool_bar)
+        self.ui.canvas_layout.addWidget(self.canvas)
 
     def plot(self, grib_message: nuwe_pyeccodes.GribMessageHandler):
         print('get lon/lat begin:', datetime.datetime.utcnow())
