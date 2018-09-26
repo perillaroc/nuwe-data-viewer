@@ -4,7 +4,8 @@ from PyQt5 import QtWidgets
 
 import numpy as np
 import matplotlib
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas
+from matplotlib.backends.backend_qt5agg import (
+    FigureCanvasQTAgg as Canvas, NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.figure import Figure
 import cartopy.crs as ccrs
 
@@ -16,18 +17,20 @@ matplotlib.use('Qt5Agg')
 
 class PlotCanvas(Canvas):
     def __init__(self):
-        self.fig = Figure()
-
-        Canvas.__init__(self, self.fig)
-        Canvas.setSizePolicy(self, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        Canvas.updateGeometry(self)
+        self.fig = Figure(tight_layout=True)
+        super(PlotCanvas, self).__init__(self.fig)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.updateGeometry()
 
 
 class PlotWidget(QtWidgets.QWidget):
     def __init__(self, parent=None):
-        QtWidgets.QWidget.__init__(self, parent)
+        super(PlotWidget, self).__init__(parent)
         self.canvas = PlotCanvas()
+        self.navigation_tool_bar = NavigationToolbar(self.canvas, self)
+
         self.layout = QtWidgets.QVBoxLayout()
+        self.layout.addWidget(self.navigation_tool_bar)
         self.layout.addWidget(self.canvas)
         self.setLayout(self.layout)
 
