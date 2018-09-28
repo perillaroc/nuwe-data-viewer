@@ -7,6 +7,8 @@ from nuwe_data_viewer.lib.core.file_content_model import FileContentModel
 from nuwe_data_viewer.lib.core.grib_meta_data import plot_key_list
 from nuwe_data_viewer.app.components.plot_widget import PlotWidget
 from nuwe_data_viewer.app.components.grib.content_widget import ContentWidget
+from nuwe_data_viewer.lib.core.plotter.grib_plotter import GribPlotter
+
 from .UI_file_visual_widget import Ui_FileVisualWidget
 
 
@@ -55,4 +57,5 @@ class FileVisualWidget(QWidget):
             return
             
         # plot message
-        self.plot_widget.plot(grib_message)
+        grid_data = GribPlotter.generate_plot_data(grib_message)
+        self.plot_widget.plot(grid_data)

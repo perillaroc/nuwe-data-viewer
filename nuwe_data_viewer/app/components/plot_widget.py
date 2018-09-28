@@ -1,15 +1,14 @@
 # coding: utf-8
 import datetime
-from PyQt5 import QtWidgets
 
-import numpy as np
+from PyQt5 import QtWidgets
 import matplotlib
 from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg as Canvas, NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.figure import Figure
 import cartopy.crs as ccrs
 
-import nuwe_pyeccodes
+from nuwe_data_viewer.lib.core.plotter.grid_data import GridData
 
 from .UI_plot_widget import Ui_PlotWidget
 
@@ -38,27 +37,7 @@ class PlotWidget(QtWidgets.QWidget):
         self.ui.navi_bar_layout.addWidget(self.navigation_tool_bar)
         self.ui.canvas_layout.addWidget(self.canvas)
 
-    def plot(self, grib_message: nuwe_pyeccodes.GribMessageHandler):
-        print('get lon/lat begin:', datetime.datetime.utcnow())
-        left_lon = grib_message.getDouble('longitudeOfFirstGridPointInDegrees')
-        right_lon = grib_message.getDouble('longitudeOfLastGridPointInDegrees')
-        lon_step = grib_message.getDouble('iDirectionIncrementInDegrees')
-        nx = grib_message.getLong('Ni')
-        lon_array = np.arange(left_lon, right_lon + lon_step / 2, lon_step)
-
-        top_lat = grib_message.getDouble('latitudeOfFirstGridPointInDegrees')
-        bottom_lat = grib_message.getDouble('latitudeOfLastGridPointInDegrees')
-        lat_step = grib_message.getDouble('jDirectionIncrementInDegrees')
-        ny = grib_message.getLong('Nj')
-        lat_array = np.arange(top_lat, bottom_lat - lat_step / 2, -lat_step)
-
-        lons, lats = np.meshgrid(lon_array, lat_array)
-
-        print('get values begin:', datetime.datetime.utcnow())
-
-        values = grib_message.getDoubleArray('values')
-        grid_values = values.reshape(ny, nx)
-
+    def plot(self, grid_data: GridData):
         print('plot begin:', datetime.datetime.utcnow())
         self.canvas.fig.clf()
         self.canvas.ax = self.canvas.fig.add_subplot(
@@ -66,7 +45,7 @@ class PlotWidget(QtWidgets.QWidget):
             projection=ccrs.PlateCarree(central_longitude=180))
 
         self.canvas.ax.contourf(
-            lons, lats, grid_values,
+            grid_data.lons, grid_data.lats, grid_data.values,
             transform=ccrs.PlateCarree(),
             cmap='rainbow'
         )
