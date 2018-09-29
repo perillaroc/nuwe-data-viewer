@@ -8,6 +8,7 @@ from matplotlib.backends.backend_qt5agg import (
 from matplotlib.figure import Figure
 import cartopy.crs as ccrs
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
+from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 
 from nuwe_data_viewer.lib.core.plotter.grid_data import GridData
 
@@ -44,21 +45,30 @@ class PlotWidget(QtWidgets.QWidget):
         self.canvas.fig.clf()
         self.canvas.ax = self.canvas.fig.add_subplot(
             111,
-            projection=ccrs.PlateCarree(central_longitude=180))
-
-        self.canvas.ax.contourf(
-            grid_data.lons, grid_data.lats, grid_data.values,
-            transform=ccrs.PlateCarree(),
-            cmap='rainbow'
+            projection=ccrs.PlateCarree(central_longitude=180)
         )
 
-        gl = self.canvas.ax.gridlines(
-            crs=ccrs.PlateCarree(), draw_labels=True, linewidth=2, color='gray', alpha=0.5, linestyle='--')
-        gl.xformatter = LONGITUDE_FORMATTER
-        gl.yformatter = LATITUDE_FORMATTER
+        cf = self.canvas.ax.contourf(
+            grid_data.lons, grid_data.lats, grid_data.values,
+            transform=ccrs.PlateCarree(),
+            cmap='rainbow',
+            extend='both'
+        )
 
         self.canvas.ax.coastlines()
         self.canvas.ax.gridlines()
+        self.canvas.ax.set_xticks([0, 60, 120, 180, 240, 300, 359.99], crs=ccrs.PlateCarree())
+        self.canvas.ax.set_yticks([-90, -60, -30, 0, 30, 60, 90], crs=ccrs.PlateCarree())
+
+        lon_formatter = LongitudeFormatter(
+            zero_direction_label=True,
+            number_format='.0f'
+        )
+        lat_formatter = LatitudeFormatter()
+        self.canvas.ax.xaxis.set_major_formatter(lon_formatter)
+        self.canvas.ax.yaxis.set_major_formatter(lat_formatter)
+
+        self.canvas.fig.colorbar(cf, orientation='horizontal')
 
         self.canvas.draw()
         print('plot end:', datetime.datetime.utcnow())
