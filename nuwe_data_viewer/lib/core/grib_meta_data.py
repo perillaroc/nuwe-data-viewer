@@ -6,25 +6,21 @@ import nuwe_pyeccodes
 
 view_key_list = (
     'edition',
-    'centre',
     'date',
     'dataType',
-    'gridType',
+    'stepRange',
     'typeOfLevel',
     'level',
-    'stepRange',
     'shortName',
-    'packingType'
 )
 
 
 plot_key_list = (
-    'date',
-    'gridType',
+    'shortName',
     'typeOfLevel',
     'level',
+    'date',
     'stepRange',
-    'shortName',
 )
 
 
