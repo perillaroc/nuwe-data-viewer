@@ -67,7 +67,7 @@ class PlotWidget(QtWidgets.QWidget):
         )
         lat_formatter = LatitudeFormatter()
         self.canvas.ax.xaxis.set_major_formatter(lon_formatter)
-        gl.xlocator = mticker.FixedLocator([0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360])
+        gl.xlocator = mticker.FixedLocator([0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 359.99])
         self.canvas.ax.yaxis.set_major_formatter(lat_formatter)
         gl.ylocator = mticker.FixedLocator([-90, -60, -30, 0, 30, 60, 90])
 
