@@ -6,6 +6,7 @@ import matplotlib
 from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg as Canvas, NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.figure import Figure
+import matplotlib.ticker as mticker
 import cartopy.crs as ccrs
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
@@ -45,7 +46,7 @@ class PlotWidget(QtWidgets.QWidget):
         self.canvas.fig.clf()
         self.canvas.ax = self.canvas.fig.add_subplot(
             111,
-            projection=ccrs.PlateCarree(central_longitude=180)
+            projection=ccrs.PlateCarree(central_longitude=150)
         )
 
         cf = self.canvas.ax.contourf(
@@ -56,8 +57,8 @@ class PlotWidget(QtWidgets.QWidget):
         )
 
         self.canvas.ax.coastlines()
-        self.canvas.ax.gridlines()
-        self.canvas.ax.set_xticks([0, 60, 120, 180, 240, 300, 359.99], crs=ccrs.PlateCarree())
+        gl = self.canvas.ax.gridlines()
+        self.canvas.ax.set_xticks([330, 0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 329.99], crs=ccrs.PlateCarree())
         self.canvas.ax.set_yticks([-90, -60, -30, 0, 30, 60, 90], crs=ccrs.PlateCarree())
 
         lon_formatter = LongitudeFormatter(
@@ -66,7 +67,9 @@ class PlotWidget(QtWidgets.QWidget):
         )
         lat_formatter = LatitudeFormatter()
         self.canvas.ax.xaxis.set_major_formatter(lon_formatter)
+        gl.xlocator = mticker.FixedLocator([0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360])
         self.canvas.ax.yaxis.set_major_formatter(lat_formatter)
+        gl.ylocator = mticker.FixedLocator([-90, -60, -30, 0, 30, 60, 90])
 
         self.canvas.fig.colorbar(cf, orientation='horizontal')
 
