@@ -49,6 +49,8 @@ class PlotWidget(QtWidgets.QWidget):
             projection=ccrs.PlateCarree(central_longitude=150)
         )
 
+        projection = ccrs.PlateCarree()
+
         cf = self.canvas.ax.contourf(
             grid_data.lons, grid_data.lats, grid_data.values,
             transform=ccrs.PlateCarree(),
@@ -58,8 +60,12 @@ class PlotWidget(QtWidgets.QWidget):
 
         self.canvas.ax.coastlines()
         gl = self.canvas.ax.gridlines()
-        self.canvas.ax.set_xticks([330, 0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 329.99], crs=ccrs.PlateCarree())
-        self.canvas.ax.set_yticks([-90, -60, -30, 0, 30, 60, 90], crs=ccrs.PlateCarree())
+        self.canvas.ax.set_xticks(
+            [330, 0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 329.99],
+            crs=projection)
+        self.canvas.ax.set_yticks(
+            [-90, -60, -30, 0, 30, 60, 90],
+            crs=projection)
 
         lon_formatter = LongitudeFormatter(
             zero_direction_label=True,
