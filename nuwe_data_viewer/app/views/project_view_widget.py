@@ -3,7 +3,7 @@ from PyQt5.QtCore import pyqtSlot, pyqtSignal, QFileInfo, QModelIndex, QPoint
 from PyQt5.QtWidgets import QDockWidget, QAction, QMenu
 
 from .UI_project_view_widget import Ui_ProjectViewWidget
-from nuwe_data_viewer.lib.core.project_model import ProjectModel, ProjectItemType, ProjectModelDataType
+from nuwe_data_viewer.lib.core.project_explorer.project_model import ProjectModel, ProjectItemType, ProjectModelDataType
 
 
 class ProjectViewWidget(QDockWidget):
