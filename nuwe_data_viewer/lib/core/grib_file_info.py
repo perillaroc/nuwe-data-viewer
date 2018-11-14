@@ -1,30 +1,60 @@
 # coding: utf-8
 import subprocess
 import sys
+from enum import Enum
 
 import nuwe_pyeccodes
 
+class GribKeyType(Enum):
+    Long = 1
+    Double = 2
+    String = 3
+    DoubleArray = 4
+
+
+class GribKey(object):
+    def __init__(self, name: str, key_type: GribKeyType):
+        self.name = name
+        self.type = key_type
+
+
+class GribMessageProp(object):
+    def __init__(self):
+        self.grib_key = None
+        self.value = None
+
+
+class GribMessageInfo(object):
+    def __init__(self):
+        self.props = []
+
+
+class GribInfo(object):
+    def __init__(self):
+        self.messages = []
+
+
 view_key_list = (
-    'edition',
-    'date',
-    'dataType',
-    'stepRange',
-    'typeOfLevel',
-    'level',
-    'shortName',
+    GribKey('edition', GribKeyType.String),
+    GribKey('date', GribKeyType.String),
+    GribKey('dataType', GribKeyType.String),
+    GribKey('stepRange', GribKeyType.String),
+    GribKey('typeOfLevel', GribKeyType.String),
+    GribKey('level', GribKeyType.String),
+    GribKey('shortName', GribKeyType.String),
 )
 
 
 plot_key_list = (
-    'shortName',
-    'typeOfLevel',
-    'level',
-    'date',
-    'stepRange',
+    GribKey('shortName', GribKeyType.String),
+    GribKey('typeOfLevel', GribKeyType.String),
+    GribKey('level', GribKeyType.String),
+    GribKey('date', GribKeyType.String),
+    GribKey('stepRange', GribKeyType.String),
 )
 
 
-class GribMetaData(object):
+class GribFileInfo(object):
     def __init__(self, config):
         self.file_path = None
         self.config = config
@@ -32,20 +62,20 @@ class GribMetaData(object):
     def set_file_path(self, file_path):
         self.file_path = file_path
 
-    def get_grib_info(self, key_list: list or set = view_key_list):
+    def get_grib_info(self, key_list: list or set = view_key_list) -> GribInfo:
         grib_file = nuwe_pyeccodes.GribFileHandler()
         grib_file.openFile(self.file_path)
         grib_message = grib_file.next()
-        grib_info = []
+        grib_info = GribInfo()
         while grib_message:
-            message_info = []
+            message_info = GribMessageInfo()
             for a_key in key_list:
-                value = grib_message.getString(a_key)
-                message_info.append({
-                    'key': a_key,
-                    'value': value
-                })
-            grib_info.append(message_info)
+                value = grib_message.getString(a_key.name)
+                prop = GribMessageProp()
+                prop.grib_key = a_key
+                prop.value = value
+                message_info.props.append(prop)
+            grib_info.messages.append(message_info)
             grib_message = grib_file.next()
         return grib_info
 

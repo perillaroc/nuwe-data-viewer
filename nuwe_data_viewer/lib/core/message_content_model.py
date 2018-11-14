@@ -3,7 +3,7 @@
 from PyQt5.QtCore import Qt, QFileInfo
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
-from .grib_meta_data import GribMetaData, view_key_list
+from .grib_file_info import GribFileInfo, view_key_list
 
 
 class MessageContentModel(QStandardItemModel):
@@ -14,7 +14,7 @@ class MessageContentModel(QStandardItemModel):
 
     def set_message(self, file_info: QFileInfo, message_index: int):
         self.file_info = file_info
-        grib_meta_data = GribMetaData(self.config)
+        grib_meta_data = GribFileInfo(self.config)
         grib_meta_data.set_file_path(self.file_info.filePath())
         stdout, stderr = grib_meta_data.get_grib_dump_output(message_index)
         return stdout
