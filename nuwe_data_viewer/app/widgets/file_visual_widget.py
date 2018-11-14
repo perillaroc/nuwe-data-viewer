@@ -1,9 +1,9 @@
 # coding: utf-8
-from PyQt5.QtCore import pyqtSlot, QModelIndex, QFileInfo
+from PyQt5.QtCore import pyqtSlot, QFileInfo
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 import nuwe_pyeccodes
 
-from nuwe_data_viewer.lib.core.file_content_model import FileContentModel
+from nuwe_data_viewer.lib.core.model.file_content_model import FileContentModel
 from nuwe_data_viewer.lib.core.grib_file_info import plot_key_list
 from nuwe_data_viewer.app.components.plot_widget import PlotWidget
 from nuwe_data_viewer.app.components.grib.content_widget import ContentWidget
