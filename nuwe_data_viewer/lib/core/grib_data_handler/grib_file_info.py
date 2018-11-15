@@ -1,42 +1,14 @@
 # coding: utf-8
 import subprocess
 import sys
-from enum import Enum
 
 import nuwe_pyeccodes
 
-
-class GribKeyType(Enum):
-    Long = 1
-    Double = 2
-    String = 3
-    DoubleArray = 4
-
-
-class GribKey(object):
-    def __init__(self, name: str, key_type: GribKeyType):
-        self.name = name
-        self.type = key_type
-
-
-class GribMessageProp(object):
-    def __init__(self):
-        self.grib_key = None
-        self.value = None
-
-
-class GribMessageInfo(object):
-    def __init__(self):
-        self.props = []
-
-
-class GribInfo(object):
-    def __init__(self):
-        self.messages = []
-
+from nuwe_data_viewer.lib.core.grib_data_handler.grib_info import (
+    GribKeyType, GribKey, GribMessageProp, GribMessageInfo, GribInfo)
 
 view_key_list = (
-    GribKey('edition', GribKeyType.String),
+    GribKey('edition', GribKeyType.Long),
     GribKey('date', GribKeyType.String),
     GribKey('dataType', GribKeyType.String),
     GribKey('stepRange', GribKeyType.String),
@@ -71,7 +43,14 @@ class GribFileInfo(object):
         while grib_message:
             message_info = GribMessageInfo()
             for a_key in key_list:
-                value = grib_message.getString(a_key.name)
+                key_name = a_key.name
+                key_type = a_key.type
+                if key_type == GribKeyType.Long:
+                    value = grib_message.getLong(key_name)
+                elif key_type == GribKeyType.Double:
+                    value = grib_message.getDouble(key_name)
+                else:
+                    value = grib_message.getString(key_name)
                 prop = GribMessageProp()
                 prop.grib_key = a_key
                 prop.value = value

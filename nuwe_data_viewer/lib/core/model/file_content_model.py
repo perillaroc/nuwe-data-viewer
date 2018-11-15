@@ -3,7 +3,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
-from nuwe_data_viewer.lib.core.grib_data_handler.grib_file_info import GribFileInfo, view_key_list, GribKey, GribKeyType
+from nuwe_data_viewer.lib.core.grib_data_handler.grib_file_info import GribFileInfo, view_key_list
+from nuwe_data_viewer.lib.core.grib_data_handler.grib_info import GribKeyType, GribKey
 
 
 class FileContentModel(QStandardItemModel):
@@ -27,7 +28,7 @@ class FileContentModel(QStandardItemModel):
 
         cur_index = 0
         extended_key_list = [
-            GribKey('No', GribKeyType.String)
+            GribKey('No', GribKeyType.Long)
         ]
         extended_key_list.extend(self.key_list)
         self.setColumnCount(len(extended_key_list))
@@ -39,7 +40,7 @@ class FileContentModel(QStandardItemModel):
         for a_message_info in grib_info.messages:
             message_row = [QStandardItem(str(cur_index))]
             for prop in a_message_info.props:
-                value_item = QStandardItem(prop.value)
+                value_item = QStandardItem(str(prop.value))
                 message_row.append(value_item)
             self.appendRow(message_row)
             cur_index += 1
