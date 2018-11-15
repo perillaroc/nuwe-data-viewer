@@ -3,7 +3,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
-from nuwe_data_viewer.lib.core.grib_file_info import GribFileInfo, view_key_list, GribKey, GribKeyType
+from nuwe_data_viewer.lib.core.grib_data_handler.grib_file_info import GribFileInfo, view_key_list, GribKey, GribKeyType
 
 
 class FileContentModel(QStandardItemModel):
@@ -19,9 +19,9 @@ class FileContentModel(QStandardItemModel):
         self._update_model()
 
     def _update_model(self):
-        grib_meta_data = GribFileInfo(self.config)
-        grib_meta_data.set_file_path(self.file_info.filePath())
-        grib_info = grib_meta_data.get_grib_info(self.key_list)
+        grib_file_info = GribFileInfo(self.config)
+        grib_file_info.set_file_path(self.file_info.filePath())
+        grib_info = grib_file_info.get_grib_info(self.key_list)
 
         self.clear()
 

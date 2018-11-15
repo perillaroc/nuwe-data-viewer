@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from nuwe_data_viewer.app.widgets.UI_file_content_widget import Ui_FileContentWidget
 from nuwe_data_viewer.app.components.grib.content_widget import ContentWidget
 from nuwe_data_viewer.lib.core.model.file_content_model import FileContentModel
-from nuwe_data_viewer.lib.core.message_content_model import MessageContentModel
+from nuwe_data_viewer.lib.core.model.message_content_model import MessageContentModel
 
 
 class FileContentWidget(QWidget):

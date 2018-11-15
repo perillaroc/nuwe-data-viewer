@@ -5,6 +5,7 @@ from enum import Enum
 
 import nuwe_pyeccodes
 
+
 class GribKeyType(Enum):
     Long = 1
     Double = 2
