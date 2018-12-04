@@ -31,13 +31,16 @@
      <number>6</number>
     </property>
     <item row="0" column="0">
-     <widget class="QListView" name="project_view">
+     <widget class="QTreeView" name="project_view">
       <property name="contextMenuPolicy">
        <enum>Qt::CustomContextMenu</enum>
       </property>
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
       </property>
+      <attribute name="headerVisible">
+       <bool>false</bool>
+      </attribute>
      </widget>
     </item>
    </layout>

@@ -4,12 +4,12 @@ from enum import Enum
 from PyQt5.QtCore import Qt, QFileInfo, QModelIndex
 from PyQt5.QtGui import QStandardItemModel
 
-from nuwe_data_viewer.lib.core.project_explorer.model.data_node import DataNode
+from .data_node import DataNode, GribFileNode
+from .container_node import ContainerNode
 
 
 class ProjectModelDataType(Enum):
     ItemType = Qt.UserRole + 300
-    FileInfoType = Qt.UserRole + 302
 
 
 class ProjectItemType(Enum):
@@ -21,13 +21,18 @@ class ProjectModel(QStandardItemModel):
         super(QStandardItemModel, self).__init__(parent)
         self.config = config
 
+        self.data_container_node = ContainerNode('data')
+        self.appendRow(self.data_container_node)
+        self.plot_container_node = ContainerNode('plot')
+        self.appendRow(self.plot_container_node)
+
     def add_item(self, item_type: ProjectItemType, item):
         if item_type == ProjectItemType.GribFile:
             file_info = QFileInfo(item['file_path'])
-            model_item = DataNode(file_info.fileName())
+            model_item = GribFileNode(file_info.fileName())
+            model_item.set_file_info(file_info)
             model_item.setData(ProjectItemType.GribFile, ProjectModelDataType.ItemType.value)
-            model_item.setData(file_info, ProjectModelDataType.FileInfoType.value)
-            self.appendRow(model_item)
+            self.data_container_node.appendRow(model_item)
         else:
             raise TypeError("item type not supported:", item_type)
 

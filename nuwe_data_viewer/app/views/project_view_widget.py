@@ -38,7 +38,7 @@ class ProjectViewWidget(QDockWidget):
 
         if item_type == ProjectItemType.GribFile:
             item = self.project_model.itemFromIndex(index)
-            file_info = item.data(ProjectModelDataType.FileInfoType.value)
+            file_info = item.file_info
             self.signal_grib_file_clicked.emit(file_info)
         else:
             print("item_type not supported", item_type)
@@ -68,5 +68,5 @@ class ProjectViewWidget(QDockWidget):
 
             if item_type == ProjectItemType.GribFile:
                 item = self.project_model.itemFromIndex(index)
-                file_info = item.data(ProjectModelDataType.FileInfoType.value)
+                file_info = item.file_info
                 self.signal_grib_file_show_chart_clicked.emit(file_info)
