@@ -9,7 +9,7 @@ from PyQt5.QtCore import Qt, QFileInfo
 from .ui.UI_mainwindow import Ui_MainWindow
 from nuwe_data_viewer.app.widgets.file_content_widget import FileContentWidget
 from nuwe_data_viewer.app.widgets.file_visual_widget import FileVisualWidget
-from nuwe_data_viewer.lib.core.project_explorer.project_model import ProjectModel
+from nuwe_data_viewer.lib.core.project_explorer.model.project_model import ProjectModel
 
 
 class FileContentItemModel(Enum):
