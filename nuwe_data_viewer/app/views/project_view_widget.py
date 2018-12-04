@@ -3,7 +3,10 @@ from PyQt5.QtCore import pyqtSlot, pyqtSignal, QFileInfo, QModelIndex, QPoint
 from PyQt5.QtWidgets import QDockWidget, QAction, QMenu
 
 from .UI_project_view_widget import Ui_ProjectViewWidget
-from nuwe_data_viewer.lib.core.project_explorer.model.project_model import ProjectModel, ProjectItemType, ProjectModelDataType
+from nuwe_data_viewer.lib.core.project_explorer.model.project_model import (
+    ProjectModel, ProjectItemType, ProjectModelDataType
+)
+from nuwe_data_viewer.lib.core.project_explorer.model.data_node import GribFileNode
 
 
 class ProjectViewWidget(QDockWidget):
@@ -34,14 +37,14 @@ class ProjectViewWidget(QDockWidget):
 
     @pyqtSlot(QModelIndex)
     def slot_project_view_clicked(self, index: QModelIndex):
-        item_type = self.project_model.get_item_type(index)
 
-        if item_type == ProjectItemType.GribFile:
-            item = self.project_model.itemFromIndex(index)
+        item = self.project_model.itemFromIndex(index)
+
+        if isinstance(item, GribFileNode):
             file_info = item.file_info
             self.signal_grib_file_clicked.emit(file_info)
         else:
-            print("item_type not supported", item_type)
+            print("item_type not supported", item.__class__.__name__)
 
     @pyqtSlot(QPoint)
     def slot_project_context_menu_requested(self, point):
@@ -64,9 +67,8 @@ class ProjectViewWidget(QDockWidget):
 
         result_action = QMenu.exec(actions, self.ui.project_view.mapToGlobal(point))
         if result_action == action_show_file_viewer:
-            item_type = self.project_model.get_item_type(index)
+            item = self.project_model.itemFromIndex(index)
 
-            if item_type == ProjectItemType.GribFile:
-                item = self.project_model.itemFromIndex(index)
+            if isinstance(item, GribFileNode):
                 file_info = item.file_info
                 self.signal_grib_file_show_chart_clicked.emit(file_info)
