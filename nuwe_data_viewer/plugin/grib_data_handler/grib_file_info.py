@@ -4,7 +4,7 @@ import sys
 
 import nuwe_pyeccodes
 
-from nuwe_data_viewer.lib.core.grib_data_handler.grib_info import (
+from nuwe_data_viewer.plugin.grib_data_handler.grib_info import (
     GribKeyType, GribKey, GribMessageProp, GribMessageInfo, GribInfo)
 
 view_key_list = (

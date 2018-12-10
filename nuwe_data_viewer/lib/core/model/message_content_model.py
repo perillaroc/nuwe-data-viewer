@@ -3,7 +3,7 @@
 from PyQt5.QtCore import QFileInfo
 from PyQt5.QtGui import QStandardItemModel
 
-from nuwe_data_viewer.lib.core.grib_data_handler.grib_file_info import GribFileInfo
+from nuwe_data_viewer.plugin.grib_data_handler.grib_file_info import GribFileInfo
 
 
 class MessageContentModel(QStandardItemModel):

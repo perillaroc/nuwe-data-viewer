@@ -3,8 +3,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
-from nuwe_data_viewer.lib.core.grib_data_handler.grib_file_info import GribFileInfo, view_key_list
-from nuwe_data_viewer.lib.core.grib_data_handler.grib_info import GribKeyType, GribKey
+from nuwe_data_viewer.plugin.grib_data_handler.grib_file_info import GribFileInfo, view_key_list
+from nuwe_data_viewer.plugin.grib_data_handler.grib_info import GribKeyType, GribKey
 
 
 class FileContentModel(QStandardItemModel):
