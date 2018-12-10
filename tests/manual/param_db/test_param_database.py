@@ -1,9 +1,10 @@
 # coding: utf-8
-from nuwe_data_viewer.plugin.grib_tool.param_db.parameter_database import ParameterDatabase
+from nuwe_data_viewer.plugin.grib_tool.param_db.grib2_table_database import Grib2TableDatabase
 
 
 def main():
-    db = ParameterDatabase.create_from_definition()
+    db = Grib2TableDatabase()
+    db.read_definition()
     print(db)
 
 
