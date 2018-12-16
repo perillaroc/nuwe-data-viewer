@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
         self.project_model = ProjectModel(self.config, parent=self)
 
         # init views
-        from .views.project_view_widget import ProjectViewWidget
+        from nuwe_data_viewer.lib.core.project_explorer.project_view_widget import ProjectViewWidget
         self.project_view_widget = ProjectViewWidget(self)
         self.project_view_widget.set_project_model(self.project_model)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.project_view_widget)
