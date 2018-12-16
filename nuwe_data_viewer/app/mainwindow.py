@@ -26,7 +26,7 @@ class MainWindow(QMainWindow):
         self.central_widget = None
 
         # connection
-        self.ui.action_open.triggered.connect(self.on_open_file)
+        self.ui.action_open_grib2_file.triggered.connect(self.on_open_grib2_file)
         self.ui.action_exit.triggered.connect(self.close)
 
         # variable
@@ -48,7 +48,7 @@ class MainWindow(QMainWindow):
             self.project_model.config = self.config
 
     @pyqtSlot(bool)
-    def on_open_file(self, checked):
+    def on_open_grib2_file(self, checked):
         file_path, file_type = QFileDialog.getOpenFileName(self, "Open a grib2 file")
         print("file path", file_path)
         self.project_view_widget.add_file(file_type, file_path)
