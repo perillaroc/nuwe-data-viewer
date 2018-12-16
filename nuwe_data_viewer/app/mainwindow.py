@@ -31,7 +31,7 @@ class MainWindow(QMainWindow):
 
         # variable
         self.config = None
-        self.project_model = ProjectModel(self.config, self)
+        self.project_model = ProjectModel(self.config, parent=self)
 
         # init views
         from .views.project_view_widget import ProjectViewWidget

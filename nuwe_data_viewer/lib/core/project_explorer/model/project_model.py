@@ -6,6 +6,7 @@ from PyQt5.QtGui import QStandardItemModel
 
 from .data_node import DataNode, GribFileNode
 from .container_node import ContainerNode
+from .project_node import ProjectNode
 
 
 class ProjectModelDataType(Enum):
@@ -17,14 +18,16 @@ class ProjectItemType(Enum):
 
 
 class ProjectModel(QStandardItemModel):
-    def __init__(self, config, parent=None):
+    def __init__(self, config, project_name='new project', parent=None):
         super(QStandardItemModel, self).__init__(parent)
         self.config = config
+        self.project_node = ProjectNode(project_name)
+        self.appendRow(self.project_node)
 
         self.data_container_node = ContainerNode('data')
-        self.appendRow(self.data_container_node)
+        self.project_node.appendRow(self.data_container_node)
         self.plot_container_node = ContainerNode('plot')
-        self.appendRow(self.plot_container_node)
+        self.project_node.appendRow(self.plot_container_node)
 
     def add_item(self, item_type: ProjectItemType, item):
         if item_type == ProjectItemType.GribFile:
