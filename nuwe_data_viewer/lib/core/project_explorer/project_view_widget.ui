@@ -45,6 +45,21 @@
     </item>
    </layout>
   </widget>
+     <action name="action_show_file_content">
+         <property name="text">
+             <string>Show file content</string>
+         </property>
+     </action>
+     <action name="action_show_file_viewer">
+         <property name="text">
+             <string>Show charts</string>
+         </property>
+     </action>
+     <action name="action_read_file">
+         <property name="text">
+             <string>Read file</string>
+         </property>
+     </action>
  </widget>
  <resources/>
  <connections/>
