@@ -60,6 +60,11 @@
              <string>Read file</string>
          </property>
      </action>
+     <action name="action_view_chart">
+         <property name="text">
+             <string>ViewChart</string>
+         </property>
+     </action>
  </widget>
  <resources/>
  <connections/>

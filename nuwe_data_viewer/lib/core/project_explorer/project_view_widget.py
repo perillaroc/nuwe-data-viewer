@@ -6,7 +6,8 @@ from .UI_project_view_widget import Ui_ProjectViewWidget
 from nuwe_data_viewer.lib.core.project_explorer.model.project_model import (
     ProjectModel, ProjectItemType
 )
-from nuwe_data_viewer.lib.core.project_explorer.model.data_node import GribFileNode
+from .model.data_node import GribFileNode
+from .model.field_node import FieldNode
 
 
 class ProjectViewWidget(QDockWidget):
@@ -50,8 +51,17 @@ class ProjectViewWidget(QDockWidget):
         if not index.isValid():
             print("[slot_project_context_menu_requested] index is not valid")
             return
-
+        global_point = self.ui.project_view.mapToGlobal(point)
         item = self.project_model.itemFromIndex(index)
+        if isinstance(item, GribFileNode):
+            self.show_context_menu_for_grib_file_node(global_point, item)
+        elif isinstance(item, FieldNode):
+            self.show_context_menu_for_field_node(global_point, item)
+        else:
+            print("item_type not supported", item.__class__.__name__)
+
+    def show_context_menu_for_grib_file_node(self, global_point, item: GribFileNode):
+        file_info = item.file_info
 
         actions = [
             self.ui.action_read_file,
@@ -59,29 +69,34 @@ class ProjectViewWidget(QDockWidget):
             self.ui.action_show_file_viewer
         ]
 
-        result_action = QMenu.exec(actions, self.ui.project_view.mapToGlobal(point))
+        result_action = QMenu.exec(actions, global_point)
 
         if result_action == self.ui.action_show_file_viewer:
-            if isinstance(item, GribFileNode):
-                file_info = item.file_info
-                self.signal_grib_file_show_chart_clicked.emit(file_info)
-
+            self.signal_grib_file_show_chart_clicked.emit(file_info)
         elif result_action == self.ui.action_show_file_content:
-            if isinstance(item, GribFileNode):
-                file_info = item.file_info
-                self.signal_grib_file_clicked.emit(file_info)
-            else:
-                print("item_type not supported", item.__class__.__name__)
+            self.signal_grib_file_clicked.emit(file_info)
         elif result_action == self.ui.action_read_file:
-            if isinstance(item, GribFileNode):
-                self.read_grib_file(item)
-            else:
-                print("item_type not supported", item.__class__.__name__)
+            self.read_grib_file(item)
+
+    def show_context_menu_for_field_node(self, global_point, item: FieldNode):
+        actions = [
+            self.ui.action_view_chart
+        ]
+
+        result_action = QMenu.exec(actions, global_point)
+
+        if result_action == self.ui.action_view_chart:
+            index_node = item.parent().child(item.index().row(), 0)
+            message_count = int(index_node.text())
+            file_info = index_node.data(FieldNode.FileInfoRole)
+            print('show chart in viewer: message {message_count} in {file_path}'.format(
+                message_count=message_count,
+                file_path=file_info.absoluteFilePath()
+            ))
 
     def read_grib_file(self, item: GribFileNode, reload=False):
         from nuwe_data_viewer.plugin.grib_data_handler.grib_file_info import GribFileInfo, project_file_list
         from nuwe_data_viewer.plugin.grib_data_handler.grib_info import GribKeyType, GribKey
-        from .model.field_node import FieldNode
 
         if item.grib_info is None or reload:
             grib_file_info = GribFileInfo(self.project_model.config)
@@ -103,7 +118,10 @@ class ProjectViewWidget(QDockWidget):
 
         cur_index = 1
         for a_message_info in item.grib_info.messages:
-            message_row = [FieldNode(str(cur_index))]
+            message_row = list()
+            index_node = FieldNode(str(cur_index))
+            index_node.setData(item.file_info, FieldNode.FileInfoRole)
+            message_row.append(index_node)
             for prop in a_message_info.props:
                 value_item = FieldNode(str(prop.value))
                 message_row.append(value_item)
