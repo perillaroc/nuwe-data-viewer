@@ -26,6 +26,12 @@ plot_key_list = (
     GribKey('stepRange', GribKeyType.String),
 )
 
+project_file_list = (
+    GribKey('shortName', GribKeyType.String),
+    GribKey('typeOfLevel', GribKeyType.String),
+    GribKey('level', GribKeyType.String)
+)
+
 
 class GribFileInfo(object):
     def __init__(self, config):

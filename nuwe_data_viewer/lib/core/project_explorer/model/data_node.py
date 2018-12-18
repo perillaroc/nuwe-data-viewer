@@ -12,6 +12,7 @@ class GribFileNode(DataNode):
         Node.__init__(self, file_name)
         self.file_name = file_name
         self.file_info = None
+        self.grib_info = None
 
     def set_file_info(self, file_info):
         self.file_info = file_info
