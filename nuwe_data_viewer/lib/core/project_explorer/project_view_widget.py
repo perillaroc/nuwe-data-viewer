@@ -32,9 +32,10 @@ class ProjectViewWidget(QDockWidget):
         self.ui.project_view.setModel(self.project_model)
 
     def add_file(self, file_type, file_path):
-        self.project_model.add_item(ProjectItemType.GribFile, {
+        file_item = self.project_model.add_item(ProjectItemType.GribFile, {
             'file_path': file_path
         })
+        self.ui.project_view.scrollTo(file_item.index())
 
     @pyqtSlot(QModelIndex)
     def slot_project_view_double_clicked(self, index: QModelIndex):
