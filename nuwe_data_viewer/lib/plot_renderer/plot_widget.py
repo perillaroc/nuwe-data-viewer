@@ -8,10 +8,9 @@ from matplotlib.backends.backend_qt5agg import (
 from matplotlib.figure import Figure
 import matplotlib.ticker as mticker
 import cartopy.crs as ccrs
-from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 
-from nuwe_data_viewer.lib.core.plotter.grid_data import GridData
+from nuwe_data_viewer.lib.plot_renderer.grid_data import GridData
 
 from .UI_plot_widget import Ui_PlotWidget
 

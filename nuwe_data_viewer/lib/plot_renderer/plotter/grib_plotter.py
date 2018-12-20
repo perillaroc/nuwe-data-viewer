@@ -4,7 +4,7 @@ import datetime
 import nuwe_pyeccodes
 import numpy as np
 
-from nuwe_data_viewer.lib.core.plotter.grid_data import GridData
+from nuwe_data_viewer.lib.plot_renderer.grid_data import GridData
 
 
 class GribPlotter(object):

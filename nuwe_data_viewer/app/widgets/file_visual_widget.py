@@ -7,7 +7,7 @@ from nuwe_data_viewer.lib.core.model.file_content_model import FileContentModel
 from nuwe_data_viewer.plugin.grib_data_handler.grib_file_info import plot_key_list
 from nuwe_data_viewer.lib.plot_renderer.plot_widget import PlotWidget
 from nuwe_data_viewer.app.components.grib.content_widget import ContentWidget
-from nuwe_data_viewer.lib.core.plotter.grib_plotter import GribPlotter
+from nuwe_data_viewer.lib.plot_renderer.plotter.grib_plotter import GribPlotter
 
 from .UI_file_visual_widget import Ui_FileVisualWidget
 
