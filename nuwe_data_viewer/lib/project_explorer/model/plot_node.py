@@ -1,4 +1,4 @@
-from nuwe_data_viewer.lib.core.project_explorer.model.node import Node
+from nuwe_data_viewer.lib.project_explorer import Node
 
 
 class PlotNode(Node):

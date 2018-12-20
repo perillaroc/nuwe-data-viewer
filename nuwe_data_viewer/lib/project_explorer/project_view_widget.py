@@ -1,9 +1,9 @@
 # coding: utf-8
-from PyQt5.QtCore import pyqtSlot, pyqtSignal, QFileInfo, QModelIndex, QPoint, Qt
-from PyQt5.QtWidgets import QDockWidget, QAction, QMenu
+from PyQt5.QtCore import pyqtSlot, pyqtSignal, QFileInfo, QModelIndex, QPoint
+from PyQt5.QtWidgets import QDockWidget, QMenu
 
 from .UI_project_view_widget import Ui_ProjectViewWidget
-from nuwe_data_viewer.lib.core.project_explorer.model.project_model import (
+from nuwe_data_viewer.lib.project_explorer.model.project_model import (
     ProjectModel, ProjectItemType
 )
 from .model.data_node import GribFileNode

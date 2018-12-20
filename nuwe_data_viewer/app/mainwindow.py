@@ -9,7 +9,7 @@ from PyQt5.QtCore import Qt, QFileInfo
 from .ui.UI_mainwindow import Ui_MainWindow
 from nuwe_data_viewer.app.widgets.file_content_widget import FileContentWidget
 from nuwe_data_viewer.app.widgets.file_visual_widget import FileVisualWidget
-from nuwe_data_viewer.lib.core.project_explorer.model.project_model import ProjectModel
+from nuwe_data_viewer.lib.project_explorer.model.project_model import ProjectModel
 
 
 class FileContentItemModel(Enum):
@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
         self.project_model = ProjectModel(self.config, parent=self)
 
         # init views
-        from nuwe_data_viewer.lib.core.project_explorer.project_view_widget import ProjectViewWidget
+        from nuwe_data_viewer.lib.project_explorer.project_view_widget import ProjectViewWidget
         self.project_view_widget = ProjectViewWidget(self)
         self.project_view_widget.set_project_model(self.project_model)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.project_view_widget)
