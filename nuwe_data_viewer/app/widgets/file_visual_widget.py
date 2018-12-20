@@ -5,9 +5,11 @@ import nuwe_pyeccodes
 
 from nuwe_data_viewer.lib.core.model.file_content_model import FileContentModel
 from nuwe_data_viewer.plugin.grib_data_handler.grib_file_info import plot_key_list
-from nuwe_data_viewer.lib.plot_renderer.plot_widget import PlotWidget
 from nuwe_data_viewer.app.components.grib.content_widget import ContentWidget
+
+from nuwe_data_viewer.lib.plot_renderer.plot.contour_layer import ContourLayer
 from nuwe_data_viewer.lib.plot_renderer.plotter.grib_plotter import GribPlotter
+from nuwe_data_viewer.lib.plot_renderer.renderer.matplotlib_renderer_widget import MatplotlibRendererWidget
 
 from .UI_file_visual_widget import Ui_FileVisualWidget
 
@@ -25,7 +27,7 @@ class FileVisualWidget(QWidget):
         self.ui.splitter.setStretchFactor(1, 1)
 
         plot_layout = QVBoxLayout(self.ui.chart_frame)
-        self.plot_widget = PlotWidget(self)
+        self.plot_widget = MatplotlibRendererWidget(self)
         plot_layout.addWidget(self.plot_widget)
 
         content_layout = QVBoxLayout(self.ui.content_frame)
@@ -58,4 +60,7 @@ class FileVisualWidget(QWidget):
             
         # plot message
         grid_data = GribPlotter.generate_plot_data(grib_message)
-        self.plot_widget.plot(grid_data)
+        layer = ContourLayer('contour layer', 'contour.1')
+        layer.grid_data = grid_data
+        self.plot_widget.clear_layer()
+        self.plot_widget.add_plot_layer(layer)
