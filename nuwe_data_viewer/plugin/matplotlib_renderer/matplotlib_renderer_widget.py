@@ -12,7 +12,7 @@ from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 
 from nuwe_data_viewer.lib.plot_renderer.renderer.renderer_widget import PlotRendererWidget, PlotLayer
 from nuwe_data_viewer.lib.plot_renderer.plot.contour_layer import ContourLayer
-from nuwe_data_viewer.lib.plot_renderer.renderer.UI_matplotlib_renderer_widget import (
+from nuwe_data_viewer.plugin.matplotlib_renderer.UI_matplotlib_renderer_widget import (
     Ui_MatplotlibRendererWidgetPlotWidget)
 
 
@@ -40,7 +40,7 @@ class MatplotlibRendererWidget(PlotRendererWidget):
         self.ui.navi_bar_layout.addWidget(self.navigation_tool_bar)
         self.ui.canvas_layout.addWidget(self.canvas)
 
-    def clear_layer(self):
+    def clear_layers(self):
         self.canvas.fig.clf()
         self.layers.clear()
 
