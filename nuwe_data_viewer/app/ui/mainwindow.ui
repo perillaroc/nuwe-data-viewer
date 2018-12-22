@@ -13,14 +13,35 @@
   <property name="windowTitle">
    <string>NUWE Data Viewer</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+     <widget class="QWidget" name="centralwidget">
+         <layout class="QGridLayout" name="gridLayout">
+             <property name="leftMargin">
+                 <number>0</number>
+             </property>
+             <property name="topMargin">
+                 <number>0</number>
+             </property>
+             <property name="rightMargin">
+                 <number>0</number>
+             </property>
+             <property name="bottomMargin">
+                 <number>0</number>
+             </property>
+             <property name="spacing">
+                 <number>0</number>
+             </property>
+             <item row="0" column="0">
+                 <widget class="QMdiArea" name="central_mdi_area"/>
+             </item>
+         </layout>
+     </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>1584</width>
-     <height>37</height>
+        <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">

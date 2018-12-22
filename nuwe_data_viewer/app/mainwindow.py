@@ -3,7 +3,7 @@ import yaml
 from enum import Enum
 
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QMainWindow, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMdiSubWindow
 from PyQt5.QtCore import Qt, QFileInfo
 
 from .ui.UI_mainwindow import Ui_MainWindow
@@ -23,7 +23,6 @@ class MainWindow(QMainWindow):
         # ui
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.central_widget = None
 
         # connection
         self.ui.action_open_grib2_file.triggered.connect(self.on_open_grib2_file)
@@ -47,6 +46,9 @@ class MainWindow(QMainWindow):
             self.config = config
             self.project_model.config = self.config
 
+    def add_mdi_sub_window(self, sub_window: QMdiSubWindow):
+        self.ui.central_mdi_area.addSubWindow(sub_window)
+
     @pyqtSlot(bool)
     def on_open_grib2_file(self, checked):
         file_path, file_type = QFileDialog.getOpenFileName(self, "Open a grib2 file")
@@ -56,17 +58,18 @@ class MainWindow(QMainWindow):
     @pyqtSlot(QFileInfo)
     def slot_file_clicked(self, file_info: QFileInfo):
         file_content_widget = FileContentWidget(self.config, self)
-        self.central_widget = file_content_widget
-        self.setCentralWidget(self.central_widget)
+        file_content_sub_window = QMdiSubWindow(self)
+        file_content_sub_window.setWidget(file_content_widget)
+        self.add_mdi_sub_window(file_content_sub_window)
+        file_content_sub_window.show()
         file_content_widget.set_file_info(file_info)
 
     @pyqtSlot(QFileInfo)
     def slot_file_show_chart_clicked(self, file_info: QFileInfo):
         file_visual_widget = FileVisualWidget(self.config, self)
-        if self.central_widget:
-            del self.central_widget
-            self.central_widget = None
-        self.central_widget = file_visual_widget
-        self.setCentralWidget(self.central_widget)
+        file_visual_sub_window = QMdiSubWindow(self)
+        file_visual_sub_window.setWidget(file_visual_widget)
+        self.add_mdi_sub_window(file_visual_sub_window)
+        file_visual_sub_window.show()
         file_visual_widget.set_file_info(file_info)
 
