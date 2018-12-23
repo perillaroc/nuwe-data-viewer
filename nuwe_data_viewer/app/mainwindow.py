@@ -3,13 +3,15 @@ import yaml
 from enum import Enum
 
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMdiSubWindow
+from PyQt5.QtWidgets import QMainWindow, QFileDialog
 from PyQt5.QtCore import Qt, QFileInfo
 
 from .ui.UI_mainwindow import Ui_MainWindow
 from nuwe_data_viewer.app.widgets.file_content_widget import FileContentWidget
 from nuwe_data_viewer.app.widgets.file_visual_widget import FileVisualWidget
 from nuwe_data_viewer.lib.project_explorer.model.project_model import ProjectModel
+from nuwe_data_viewer.lib.core.editor_manager.editor_window import EditorWindow
+from nuwe_data_viewer.lib.core.editor_manager.editor_manager import EditorManager
 
 
 class FileContentItemModel(Enum):
@@ -19,6 +21,8 @@ class FileContentItemModel(Enum):
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
+
+        self.editor_manager = None
 
         # ui
         self.ui = Ui_MainWindow()
@@ -46,8 +50,11 @@ class MainWindow(QMainWindow):
             self.config = config
             self.project_model.config = self.config
 
-    def add_mdi_sub_window(self, sub_window: QMdiSubWindow):
-        self.ui.central_mdi_area.addSubWindow(sub_window)
+    def set_central_widget(self, widget):
+        self.setCentralWidget(widget)
+
+    def set_editor_manager(self, editor_manager: EditorManager):
+        self.editor_manager = editor_manager
 
     @pyqtSlot(bool)
     def on_open_grib2_file(self, checked):
@@ -58,18 +65,24 @@ class MainWindow(QMainWindow):
     @pyqtSlot(QFileInfo)
     def slot_file_clicked(self, file_info: QFileInfo):
         file_content_widget = FileContentWidget(self.config, self)
-        file_content_sub_window = QMdiSubWindow(self)
-        file_content_sub_window.setWidget(file_content_widget)
-        self.add_mdi_sub_window(file_content_sub_window)
+        file_content_sub_window = EditorWindow(self)
+        file_content_sub_window.set_title('Content: {file_name}'.format(
+            file_name=file_info.fileName()
+        ))
+        file_content_sub_window.edit_area.set_current_view(file_content_widget)
+        self.editor_manager.add_window(file_content_sub_window)
         file_content_sub_window.show()
         file_content_widget.set_file_info(file_info)
 
     @pyqtSlot(QFileInfo)
     def slot_file_show_chart_clicked(self, file_info: QFileInfo):
         file_visual_widget = FileVisualWidget(self.config, self)
-        file_visual_sub_window = QMdiSubWindow(self)
-        file_visual_sub_window.setWidget(file_visual_widget)
-        self.add_mdi_sub_window(file_visual_sub_window)
+        file_visual_sub_window = EditorWindow(self)
+        file_visual_sub_window.set_title('Visual: {file_name}'.format(
+            file_name=file_info.fileName()
+        ))
+        file_visual_sub_window.edit_area.set_current_view(file_visual_widget)
+        self.editor_manager.add_window(file_visual_sub_window)
         file_visual_sub_window.show()
         file_visual_widget.set_file_info(file_info)
 
