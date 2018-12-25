@@ -10,7 +10,10 @@ from .ui.UI_mainwindow import Ui_MainWindow
 from nuwe_data_viewer.app.widgets.file_content_widget import FileContentWidget
 from nuwe_data_viewer.app.widgets.file_visual_widget import FileVisualWidget
 from nuwe_data_viewer.lib.project_explorer.model.project_model import ProjectModel
+
 from nuwe_data_viewer.lib.core.editor_manager.editor_window import EditorWindow
+from nuwe_data_viewer.lib.core.editor_manager.editor_interface import EditorInterface
+from nuwe_data_viewer.lib.core.editor_manager.editor_view import EditorView
 from nuwe_data_viewer.lib.core.editor_manager.editor_manager import EditorManager
 
 
@@ -64,25 +67,42 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot(QFileInfo)
     def slot_file_clicked(self, file_info: QFileInfo):
+
         file_content_widget = FileContentWidget(self.config, self)
-        file_content_sub_window = EditorWindow(self)
-        file_content_sub_window.set_title('Content: {file_name}'.format(
+
+        editor = EditorInterface(self)
+        editor.widget = file_content_widget
+
+        window = EditorWindow(self)
+        window.set_title('Content: {file_name}'.format(
             file_name=file_info.fileName()
         ))
-        file_content_sub_window.edit_area.set_current_view(file_content_widget)
-        self.editor_manager.add_window(file_content_sub_window)
-        file_content_sub_window.show()
+
+        view = EditorView(window.edit_area, self)
+        view.set_editor(editor)
+
+        window.edit_area.set_current_view(view)
+        self.editor_manager.add_window(window)
+        window.show()
         file_content_widget.set_file_info(file_info)
 
     @pyqtSlot(QFileInfo)
     def slot_file_show_chart_clicked(self, file_info: QFileInfo):
         file_visual_widget = FileVisualWidget(self.config, self)
-        file_visual_sub_window = EditorWindow(self)
-        file_visual_sub_window.set_title('Visual: {file_name}'.format(
+
+        editor = EditorInterface(self)
+        editor.widget = file_visual_widget
+
+        window = EditorWindow(self)
+        window.set_title('Visual: {file_name}'.format(
             file_name=file_info.fileName()
         ))
-        file_visual_sub_window.edit_area.set_current_view(file_visual_widget)
-        self.editor_manager.add_window(file_visual_sub_window)
-        file_visual_sub_window.show()
+
+        view = EditorView(window.edit_area, self)
+        view.set_editor(editor)
+        window.edit_area.set_current_view(view)
+
+        self.editor_manager.add_window(window)
+        window.show()
         file_visual_widget.set_file_info(file_info)
 
