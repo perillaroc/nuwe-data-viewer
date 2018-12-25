@@ -11,10 +11,10 @@ from nuwe_data_viewer.app.widgets.file_content_widget import FileContentWidget
 from nuwe_data_viewer.app.widgets.file_visual_widget import FileVisualWidget
 from nuwe_data_viewer.lib.project_explorer.model.project_model import ProjectModel
 
-from nuwe_data_viewer.lib.core.editor_manager.editor_window import EditorWindow
-from nuwe_data_viewer.lib.core.editor_manager.editor_interface import EditorInterface
-from nuwe_data_viewer.lib.core.editor_manager.editor_view import EditorView
-from nuwe_data_viewer.lib.core.editor_manager.editor_manager import EditorManager
+from nuwe_data_viewer.lib.core.editor_system.editor_window import EditorWindow
+from nuwe_data_viewer.lib.core.editor_system.editor_interface import EditorInterface
+from nuwe_data_viewer.lib.core.editor_system.editor_view import EditorView
+from nuwe_data_viewer.lib.core.editor_system.editor_manager import EditorManager
 
 
 class FileContentItemModel(Enum):

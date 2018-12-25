@@ -12,7 +12,7 @@ def run_app(config_file):
     main_window = MainWindow()
     main_window.load_config(config_file)
 
-    from nuwe_data_viewer.lib.core.editor_manager.editor_manager import EditorManager
+    from nuwe_data_viewer.lib.core.editor_system.editor_manager import EditorManager
     editor_manager = EditorManager(main_window)
     main_window.set_editor_manager(editor_manager)
 

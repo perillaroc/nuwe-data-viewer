@@ -1,7 +1,7 @@
 # coding: utf-8
 from PyQt5.QtWidgets import QWidget, QStackedLayout
 
-from nuwe_data_viewer.lib.core.editor_manager.editor_view import EditorView
+from nuwe_data_viewer.lib.core.editor_system.editor_view import EditorView
 
 
 class EditorArea(QWidget):
