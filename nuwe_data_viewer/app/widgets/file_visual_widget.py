@@ -7,7 +7,7 @@ from nuwe_data_viewer.app.components.grib.content_widget import ContentWidget
 
 from nuwe_data_viewer.lib.core.model.file_content_model import FileContentModel
 from nuwe_data_viewer.lib.plot_renderer.plot.contour_layer import ContourLayer
-from nuwe_data_viewer.lib.plot_renderer.plotter.grib_plotter import GribPlotter
+from nuwe_data_viewer.plugin.grib_tool.grib_plotter import GribPlotter
 
 from nuwe_data_viewer.plugin.grib_data_handler.grib_file_info import plot_key_list
 from nuwe_data_viewer.plugin.matplotlib_renderer.matplotlib_renderer_widget import MatplotlibRendererWidget
