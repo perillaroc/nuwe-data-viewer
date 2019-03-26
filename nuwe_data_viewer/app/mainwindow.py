@@ -49,7 +49,7 @@ class MainWindow(QMainWindow):
 
     def load_config(self, config_file):
         with open(config_file) as f:
-            config = yaml.load(f)
+            config = yaml.safe_load(f)
             self.config = config
             self.project_model.config = self.config
 
