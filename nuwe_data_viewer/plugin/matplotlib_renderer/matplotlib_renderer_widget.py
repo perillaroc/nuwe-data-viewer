@@ -10,8 +10,8 @@ import matplotlib.ticker as mticker
 import cartopy.crs as ccrs
 from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 
-from nuwe_data_viewer.lib.plot_renderer.renderer_widget import PlotRendererWidget, PlotLayer
-from nuwe_data_viewer.lib.plot_renderer.plot.contour_layer import ContourLayer
+from nuwe_data_viewer.plugin.plot_renderer.renderer_widget import PlotRendererWidget, PlotLayer
+from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
 from nuwe_data_viewer.plugin.matplotlib_renderer.UI_matplotlib_renderer_widget import (
     Ui_MatplotlibRendererWidgetPlotWidget)
 

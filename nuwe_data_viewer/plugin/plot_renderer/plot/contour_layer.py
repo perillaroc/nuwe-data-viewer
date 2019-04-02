@@ -1,6 +1,6 @@
 # coding: utf-8
 from .plot_layer import PlotLayer
-from nuwe_data_viewer.lib.plot_renderer.grid_data import GridData
+from nuwe_data_viewer.plugin.plot_renderer.grid_data import GridData
 
 
 class ContourLayer(PlotLayer):

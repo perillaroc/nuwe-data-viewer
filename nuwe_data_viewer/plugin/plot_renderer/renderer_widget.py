@@ -1,7 +1,7 @@
 # coding: utf-8
 from PyQt5 import QtWidgets
 
-from nuwe_data_viewer.lib.plot_renderer.plot.plot_layer import PlotLayer
+from nuwe_data_viewer.plugin.plot_renderer.plot.plot_layer import PlotLayer
 
 
 class PlotRendererWidget(QtWidgets.QWidget):

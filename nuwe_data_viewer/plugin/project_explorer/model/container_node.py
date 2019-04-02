@@ -1,5 +1,5 @@
 # coding: utf-8
-from nuwe_data_viewer.lib.project_explorer.model.node import Node
+from nuwe_data_viewer.plugin.project_explorer.model.node import Node
 
 
 class ContainerNode(Node):
