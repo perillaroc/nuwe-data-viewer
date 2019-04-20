@@ -1,5 +1,9 @@
 # coding: utf-8
 import sys
+from nuwe_data_viewer.plugin.grib_tool.param_db.grib2_table_database import Grib2TableDatabase
+
+grib_table_db = Grib2TableDatabase()
+grib_table_db.read_definition()
 
 
 def run_app(config_file):

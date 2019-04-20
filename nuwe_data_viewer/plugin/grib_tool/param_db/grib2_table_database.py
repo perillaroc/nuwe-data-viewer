@@ -1,6 +1,7 @@
 # coding: utf-8
 import os
 import pathlib
+from nuwe_data_viewer.lib.util.id import Id
 
 
 class TableRecord(object):
@@ -111,7 +112,7 @@ class Grib2TableDatabase(object):
         for ticket_id, category in self.categories.items():
             if category.code == 255:
                 continue
-            discipline_id = ticket_id.split('.')[0]
+            discipline_id = Id(ticket_id.name.split('.')[0])
             discipline = self.disciplines[discipline_id]
             self._read_parameter_numbers_for_category(discipline, category)
 
@@ -167,20 +168,20 @@ class Grib2TableDatabase(object):
                 record.code = int(tokens[0])
                 record.figure = tokens[1]
                 record.description = tokens[2]
-                self.level_types[record.code] = record
+                self.level_types[Id(str(record.code))] = record
 
     def _save_discipline(self, discipline: TableRecord):
-        ticket_id = "{discipline}".format(discipline=discipline.code)
+        ticket_id = Id("{discipline}".format(discipline=discipline.code))
         self.disciplines[ticket_id] = discipline
 
     def _save_parameter_category(self, discipline: TableRecord, category: TableRecord):
-        ticket_id = "{discipline}.{category}".format(discipline=discipline.code, category=category.code)
+        ticket_id = Id("{discipline}.{category}".format(discipline=discipline.code, category=category.code))
         self.categories[ticket_id] = category
 
     def _save_parameter_number(self, discipline: TableRecord, category: TableRecord, number: TableRecord):
-        ticket_id = "{discipline}.{category}.{number}".format(
+        ticket_id = Id("{discipline}.{category}.{number}".format(
             discipline=discipline.code,
             category=category.code,
             number=number.code
-        )
-        self.numbers[ticket_id] = category
+        ))
+        self.numbers[ticket_id] = number

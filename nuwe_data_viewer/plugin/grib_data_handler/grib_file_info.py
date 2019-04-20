@@ -5,31 +5,31 @@ import sys
 import nuwe_pyeccodes
 
 from nuwe_data_viewer.plugin.grib_data_handler.grib_info import (
-    GribKeyType, GribKey, GribMessageProp, GribMessageInfo, GribInfo)
+    GribKeyType, GribPropKey, GribMessageProp, GribMessageInfo, GribInfo)
 
 view_key_list = (
-    GribKey('edition', GribKeyType.Long),
-    GribKey('date', GribKeyType.String),
-    GribKey('dataType', GribKeyType.String),
-    GribKey('stepRange', GribKeyType.String),
-    GribKey('typeOfLevel', GribKeyType.String),
-    GribKey('level', GribKeyType.String),
-    GribKey('shortName', GribKeyType.String),
+    GribPropKey('edition', GribKeyType.Long),
+    GribPropKey('date', GribKeyType.String),
+    GribPropKey('dataType', GribKeyType.String),
+    GribPropKey('stepRange', GribKeyType.String),
+    GribPropKey('typeOfLevel', GribKeyType.String),
+    GribPropKey('level', GribKeyType.String),
+    GribPropKey('shortName', GribKeyType.String),
 )
 
 
 plot_key_list = (
-    GribKey('shortName', GribKeyType.String),
-    GribKey('typeOfLevel', GribKeyType.String),
-    GribKey('level', GribKeyType.String),
-    GribKey('date', GribKeyType.String),
-    GribKey('stepRange', GribKeyType.String),
+    GribPropKey('shortName', GribKeyType.String),
+    GribPropKey('typeOfLevel', GribKeyType.String),
+    GribPropKey('level', GribKeyType.String),
+    GribPropKey('date', GribKeyType.String),
+    GribPropKey('stepRange', GribKeyType.String),
 )
 
 project_file_list = (
-    GribKey('shortName', GribKeyType.String),
-    GribKey('typeOfLevel', GribKeyType.String),
-    GribKey('level', GribKeyType.String)
+    GribPropKey('shortName', GribKeyType.String),
+    GribPropKey('typeOfLevel', GribKeyType.String),
+    GribPropKey('level', GribKeyType.String)
 )
 
 

@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
 from nuwe_data_viewer.plugin.grib_data_handler.grib_file_info import GribFileParser, view_key_list
-from nuwe_data_viewer.plugin.grib_data_handler.grib_info import GribKeyType, GribKey
+from nuwe_data_viewer.plugin.grib_data_handler.grib_info import GribKeyType, GribPropKey
 
 
 class FileContentModel(QStandardItemModel):
@@ -28,7 +28,7 @@ class FileContentModel(QStandardItemModel):
 
         cur_index = 0
         extended_key_list = [
-            GribKey('No', GribKeyType.Long)
+            GribPropKey('No', GribKeyType.Long)
         ]
         extended_key_list.extend(self.key_list)
         self.setColumnCount(len(extended_key_list))
