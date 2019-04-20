@@ -33,7 +33,7 @@ project_file_list = (
 )
 
 
-class GribFileInfo(object):
+class GribFileParser(object):
     def __init__(self, config):
         self.file_path = None
         self.config = config

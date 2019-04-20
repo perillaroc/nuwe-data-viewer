@@ -96,35 +96,10 @@ class ProjectViewWidget(QDockWidget):
             ))
 
     def read_grib_file(self, item: GribFileNode, reload=False):
-        from nuwe_data_viewer.plugin.grib_data_handler.grib_file_info import GribFileInfo, project_file_list
-        from nuwe_data_viewer.plugin.grib_data_handler.grib_info import GribKeyType, GribKey
+        from nuwe_data_viewer.plugin.grib_tool.grib_reader import GribReader, FieldClassifyType
+        grib_reader = GribReader(self.project_model.config)
 
         if item.grib_info is None or reload:
-            grib_file_info = GribFileInfo(self.project_model.config)
-            grib_file_info.set_file_path(item.file_info.filePath())
-            grib_info = grib_file_info.get_grib_info(project_file_list)
-            item.grib_info = grib_info
+            grib_reader.read(item)
 
-        extended_key_list = [
-            GribKey('No', GribKeyType.Long)
-        ]
-        extended_key_list.extend(project_file_list)
-        self.project_model.setColumnCount(len(extended_key_list))
-        self.ui.project_view.setHeaderHidden(False)
-
-        # cur_index = 0
-        # for a_key in extended_key_list:
-        #     self.project_model.setHeaderData(cur_index, Qt.Horizontal, a_key.name)
-        #     cur_index += 1
-
-        cur_index = 1
-        for a_message_info in item.grib_info.messages:
-            message_row = list()
-            index_node = FieldNode(str(cur_index))
-            index_node.setData(item.file_info, FieldNode.FileInfoRole)
-            message_row.append(index_node)
-            for prop in a_message_info.props:
-                value_item = FieldNode(str(prop.value))
-                message_row.append(value_item)
-            item.appendRow(message_row)
-            cur_index += 1
+        grib_reader.sort_data_node(item, FieldClassifyType.Category)
