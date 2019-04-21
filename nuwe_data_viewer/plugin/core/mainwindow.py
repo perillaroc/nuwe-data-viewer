@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog
 from PyQt5.QtCore import Qt, QFileInfo
 
 from nuwe_data_viewer.plugin.core.UI_mainwindow import Ui_MainWindow
-from nuwe_data_viewer.plugin.core.widgets import FileContentWidget
+from nuwe_data_viewer.plugin.core.widgets.file_content_widget import FileContentWidget
 from nuwe_data_viewer.plugin.core.widgets.file_visual_widget import FileVisualWidget
 from nuwe_data_viewer.plugin.project_explorer.model.project_model import ProjectModel
 
@@ -47,11 +47,9 @@ class MainWindow(QMainWindow):
         self.project_view_widget.signal_grib_file_clicked.connect(self.slot_file_clicked)
         self.project_view_widget.signal_grib_file_show_chart_clicked.connect(self.slot_file_show_chart_clicked)
 
-    def load_config(self, config_file):
-        with open(config_file) as f:
-            config = yaml.safe_load(f)
-            self.config = config
-            self.project_model.config = self.config
+    def load_config(self, config):
+        self.config = config
+        self.project_model.config = self.config
 
     def set_central_widget(self, widget):
         self.setCentralWidget(widget)

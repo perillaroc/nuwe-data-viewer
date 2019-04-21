@@ -9,17 +9,14 @@ grib_table_db.read_definition()
 def run_app(config_file):
     from PyQt5.QtWidgets import QApplication
     from PyQt5.QtCore import Qt
-    from nuwe_data_viewer.plugin.core.mainwindow import MainWindow
 
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     app = QApplication(sys.argv)
-    main_window = MainWindow()
-    main_window.load_config(config_file)
 
-    from nuwe_data_viewer.plugin.core.editor_system.editor_manager import EditorManager
-    editor_manager = EditorManager(main_window)
-    main_window.set_editor_manager(editor_manager)
+    from nuwe_data_viewer.lib.plugin_system.manager import PluginManager
+    plugin_manager = PluginManager()
+    plugin_manager.load_config(config_file)
 
-    main_window.show()
+    plugin_manager.load_plugins()
 
     sys.exit(app.exec_())
