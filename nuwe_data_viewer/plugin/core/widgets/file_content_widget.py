@@ -6,9 +6,8 @@ View Grib2 File contents in a table view.
 from PyQt5.QtCore import pyqtSlot, QFileInfo
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
-
-from nuwe_data_viewer.app.widgets.UI_file_content_widget import Ui_FileContentWidget
-from nuwe_data_viewer.app.components.grib.content_widget import ContentWidget
+from nuwe_data_viewer.plugin.core.widgets import Ui_FileContentWidget
+from nuwe_data_viewer.plugin.core.components.grib.content_widget import ContentWidget
 from nuwe_data_viewer.plugin.core.model.file_content_model import FileContentModel
 from nuwe_data_viewer.plugin.core.model.message_content_model import MessageContentModel
 

@@ -9,7 +9,7 @@ grib_table_db.read_definition()
 def run_app(config_file):
     from PyQt5.QtWidgets import QApplication
     from PyQt5.QtCore import Qt
-    from .mainwindow import MainWindow
+    from nuwe_data_viewer.plugin.core.mainwindow import MainWindow
 
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     app = QApplication(sys.argv)
