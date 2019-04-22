@@ -24,6 +24,9 @@ class PluginManager(object):
     def load_plugins(self):
         queue = self.load_queue()
         for plugin in queue:
+            plugin.set_plugin_manager(self)
+
+        for plugin in queue:
             plugin.initialize_plugin()
 
         for plugin in reversed(queue):
@@ -31,6 +34,6 @@ class PluginManager(object):
 
     def load_queue(self):
         queue = [
-            nuwe_data_viewer.plugin.core.plugin_class(self)
+            nuwe_data_viewer.plugin.core.plugin
         ]
         return queue

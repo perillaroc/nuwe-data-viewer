@@ -6,8 +6,8 @@ plugin_name = "core"
 
 
 class CorePlugin(PluginBase):
-    def __init__(self, plugin_manager):
-        PluginBase.__init__(self, plugin_manager, plugin_name)
+    def __init__(self):
+        PluginBase.__init__(self, plugin_name)
         self.main_window = None
 
     def initialize_plugin(self):
@@ -25,4 +25,4 @@ class CorePlugin(PluginBase):
         pass
 
 
-plugin_class = CorePlugin
+plugin = CorePlugin()
