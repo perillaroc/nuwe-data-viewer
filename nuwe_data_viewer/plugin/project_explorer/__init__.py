@@ -14,17 +14,21 @@ class ProjectExplorerPlugin(PluginBase):
         PluginBase.__init__(self, plugin_name)
         self.project_view_widget = None
         self.project_model = None
+        self.core_plugin = None
 
     def initialize_plugin(self):
+        from nuwe_data_viewer.plugin.core import plugin as core_plugin
+        self.core_plugin = core_plugin
+
         self.project_view_widget = ProjectViewWidget()
         self.project_model = ProjectModel(config=self.plugin_manager.config, parent=self.project_view_widget)
         self.project_view_widget.set_project_model(self.project_model)
 
-        from nuwe_data_viewer.plugin.core import plugin as core_plugin
-        main_window = core_plugin.main_window
+        main_window = self.core_plugin.main_window
         main_window.addDockWidget(Qt.LeftDockWidgetArea, self.project_view_widget)
-        self.project_view_widget.signal_grib_file_clicked.connect(main_window.slot_file_clicked)
-        self.project_view_widget.signal_grib_file_show_chart_clicked.connect(main_window.slot_file_show_chart_clicked)
+
+        main_window.ui.action_open_grib2_file.triggered.connect(
+            self.project_view_widget.slot_open_grib2_file)
 
     def plugin_initialized(self):
         pass
