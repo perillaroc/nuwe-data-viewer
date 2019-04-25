@@ -1,5 +1,5 @@
 # coding: utf-8
-from PyQt5.QtCore import pyqtSlot, pyqtSignal, QFileInfo, QModelIndex, QPoint
+from PyQt5.QtCore import pyqtSlot, QModelIndex, QPoint
 from PyQt5.QtWidgets import QDockWidget, QMenu, QFileDialog
 
 from .UI_project_view_widget import Ui_ProjectViewWidget
@@ -7,8 +7,8 @@ from .model.project_model import ProjectModel, ProjectItemType
 from .model.data_node import GribFileNode
 from .model.field_node import FieldNode
 
-from nuwe_data_viewer.plugin.core.widgets.file_content_widget import FileContentWidget
-from nuwe_data_viewer.plugin.core.widgets.file_visual_widget import FileVisualWidget
+from nuwe_data_viewer.plugin.project_explorer.widgets.file_content_widget import FileContentWidget
+from nuwe_data_viewer.plugin.project_explorer.widgets.file_visual_widget import FileVisualWidget
 
 from nuwe_data_viewer.plugin.core.editor_system.editor_window import EditorWindow
 from nuwe_data_viewer.plugin.core.editor_system.editor_interface import EditorInterface

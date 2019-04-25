@@ -3,9 +3,9 @@ from PyQt5.QtCore import pyqtSlot, QFileInfo
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 import nuwe_pyeccodes
 
-from nuwe_data_viewer.plugin.core.components.grib.content_widget import ContentWidget
+from nuwe_data_viewer.plugin.project_explorer.components.grib.content_widget import ContentWidget
 
-from nuwe_data_viewer.plugin.core.model.file_content_model import FileContentModel
+from nuwe_data_viewer.plugin.project_explorer.widgets.file_content_model import FileContentModel
 from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
 from nuwe_data_viewer.plugin.grib_tool.grib_plotter import GribPlotter
 
@@ -58,7 +58,7 @@ class FileVisualWidget(QWidget):
         if grib_message is None:
             print("ERROR when loading message: ", message_number)
             return
-            
+
         # plot message
         grid_data = GribPlotter.generate_plot_data(grib_message)
         layer = ContourLayer('contour layer', 'contour.1')
