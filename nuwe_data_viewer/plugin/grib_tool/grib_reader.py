@@ -2,12 +2,13 @@
 from enum import Enum
 
 from nuwe_data_viewer.lib.util.id import Id
+
 from nuwe_data_viewer.plugin.project_explorer.model.data_node import GribFileNode
 from nuwe_data_viewer.plugin.project_explorer.model.field_node import FieldNode, FieldCategoryNode
+from nuwe_data_viewer.plugin.project_explorer.model.model_util import find_node_by_path
 
 from nuwe_data_viewer.plugin.grib_data_handler.grib_file_info import GribFileParser
 from nuwe_data_viewer.plugin.grib_data_handler.grib_info import GribKeyType, GribPropKey
-from nuwe_data_viewer.plugin.project_explorer.model.model_util import find_node_by_path
 
 
 class FieldClassifyType(Enum):
@@ -57,6 +58,8 @@ class GribReader(object):
         level_type_value_key = GribPropKey("typeOfLevel", GribKeyType.String)
         level_key = GribPropKey("level", GribKeyType.Long)
 
+        from nuwe_data_viewer.plugin.grib_tool import plugin as grib_tool_plugin
+
         grib_info = data_node.grib_info
         cur_index = 1
         for message_info in grib_info.messages:
@@ -69,8 +72,6 @@ class GribReader(object):
 
             root_node = data_node
 
-            from nuwe_data_viewer.app import grib_table_db
-
             # category
             category_id = Id("{discipline}.{category}".format(
                 discipline=discipline_prop.value,
@@ -78,7 +79,7 @@ class GribReader(object):
 
             category_node = find_node_by_path(root_node, [category_id])
             if category_node is None:
-                category_record = grib_table_db.categories.get(category_id, None)
+                category_record = grib_tool_plugin.grib_table_database.categories.get(category_id, None)
                 if category_record is not None:
                     category_node = FieldCategoryNode(category_record.description, category_id)
                 else:
@@ -93,7 +94,7 @@ class GribReader(object):
             ))
             number_node = find_node_by_path(root_node, [category_id, number_id])
             if number_node is None:
-                number_record = grib_table_db.numbers.get(number_id, None)
+                number_record = grib_tool_plugin.grib_table_database.numbers.get(number_id, None)
                 if number_record is not None:
                     number_node = FieldCategoryNode(number_record.description, number_id)
                 else:
