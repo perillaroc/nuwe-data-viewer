@@ -1,5 +1,6 @@
 # coding: utf-8
 import nuwe_data_viewer.plugin.core
+import nuwe_data_viewer.plugin.project_explorer
 import yaml
 
 
@@ -34,6 +35,7 @@ class PluginManager(object):
 
     def load_queue(self):
         queue = [
-            nuwe_data_viewer.plugin.core.plugin
+            nuwe_data_viewer.plugin.core.plugin,
+            nuwe_data_viewer.plugin.project_explorer.plugin
         ]
         return queue

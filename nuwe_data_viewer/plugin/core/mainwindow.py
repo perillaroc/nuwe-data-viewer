@@ -9,7 +9,6 @@ from PyQt5.QtCore import Qt, QFileInfo
 from nuwe_data_viewer.plugin.core.UI_mainwindow import Ui_MainWindow
 from nuwe_data_viewer.plugin.core.widgets.file_content_widget import FileContentWidget
 from nuwe_data_viewer.plugin.core.widgets.file_visual_widget import FileVisualWidget
-from nuwe_data_viewer.plugin.project_explorer.model.project_model import ProjectModel
 
 from nuwe_data_viewer.plugin.core.editor_system.editor_window import EditorWindow
 from nuwe_data_viewer.plugin.core.editor_system.editor_interface import EditorInterface
@@ -37,19 +36,9 @@ class MainWindow(QMainWindow):
 
         # variable
         self.config = None
-        self.project_model = ProjectModel(self.config, parent=self)
-
-        # init views
-        from nuwe_data_viewer.plugin.project_explorer.project_view_widget import ProjectViewWidget
-        self.project_view_widget = ProjectViewWidget(self)
-        self.project_view_widget.set_project_model(self.project_model)
-        self.addDockWidget(Qt.LeftDockWidgetArea, self.project_view_widget)
-        self.project_view_widget.signal_grib_file_clicked.connect(self.slot_file_clicked)
-        self.project_view_widget.signal_grib_file_show_chart_clicked.connect(self.slot_file_show_chart_clicked)
 
     def load_config(self, config):
         self.config = config
-        self.project_model.config = self.config
 
     def set_central_widget(self, widget):
         self.setCentralWidget(widget)

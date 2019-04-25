@@ -18,7 +18,7 @@ class ProjectViewWidget(QDockWidget):
     signal_grib_file_show_chart_clicked = pyqtSignal(QFileInfo)
 
     def __init__(self, parent=None):
-        super(QDockWidget, self).__init__(parent)
+        QDockWidget.__init__(self, parent)
 
         self.ui = Ui_ProjectViewWidget()
         self.ui.setupUi(self)
