@@ -39,6 +39,8 @@ class PluginManager(object):
         import nuwe_data_viewer.plugin.plot_renderer
         import nuwe_data_viewer.plugin.matplotlib_renderer
         import nuwe_data_viewer.plugin.project_explorer
+        import nuwe_data_viewer.plugin.data_viewer
+        import nuwe_data_viewer.plugin.plot_viewer
 
         queue = [
             nuwe_data_viewer.plugin.core.plugin,
@@ -46,6 +48,8 @@ class PluginManager(object):
             nuwe_data_viewer.plugin.grib_tool.plugin,
             nuwe_data_viewer.plugin.plot_renderer.plugin,
             nuwe_data_viewer.plugin.matplotlib_renderer.plugin,
+            nuwe_data_viewer.plugin.data_viewer.plugin,
+            nuwe_data_viewer.plugin.plot_viewer.plugin,
             nuwe_data_viewer.plugin.project_explorer.plugin
         ]
         return queue

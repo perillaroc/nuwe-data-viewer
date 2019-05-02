@@ -3,9 +3,9 @@ from PyQt5.QtCore import pyqtSlot, QFileInfo
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 import nuwe_pyeccodes
 
-from nuwe_data_viewer.plugin.project_explorer.components.grib.content_widget import ContentWidget
+from nuwe_data_viewer.plugin.data_viewer.components.grib.content_widget import ContentWidget
 
-from nuwe_data_viewer.plugin.project_explorer.widgets.file_content_model import FileContentModel
+from nuwe_data_viewer.plugin.data_viewer.file_content_model import FileContentModel
 from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
 from nuwe_data_viewer.plugin.grib_tool.grib_plotter import GribPlotter
 

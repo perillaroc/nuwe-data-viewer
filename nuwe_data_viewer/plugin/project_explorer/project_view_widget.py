@@ -7,8 +7,8 @@ from .model.project_model import ProjectModel, ProjectItemType
 from .model.data_node import GribFileNode
 from .model.field_node import FieldNode
 
-from nuwe_data_viewer.plugin.project_explorer.widgets.file_content_widget import FileContentWidget
-from nuwe_data_viewer.plugin.project_explorer.widgets.file_visual_widget import FileVisualWidget
+from nuwe_data_viewer.plugin.data_viewer.file_content_widget import FileContentWidget
+from nuwe_data_viewer.plugin.plot_viewer.file_visual_widget import FileVisualWidget
 
 from nuwe_data_viewer.plugin.core.editor_system.editor_window import EditorWindow
 from nuwe_data_viewer.plugin.core.editor_system.editor_interface import EditorInterface

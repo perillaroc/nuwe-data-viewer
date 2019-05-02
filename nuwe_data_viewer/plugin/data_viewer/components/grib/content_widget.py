@@ -2,7 +2,7 @@
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import QFileInfo, pyqtSignal, pyqtSlot, QModelIndex
 
-from nuwe_data_viewer.plugin.project_explorer.widgets.file_content_model import FileContentModel
+from nuwe_data_viewer.plugin.data_viewer.file_content_model import FileContentModel
 from .UI_content_widget import Ui_ContentWidget
 
 

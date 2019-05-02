@@ -9,4 +9,4 @@ class ContourLayer(PlotLayer):
         self.grid_data = None
 
     def set_data(self, grid_data: GridData):
-        self.grid_data = GridData
+        self.grid_data = grid_data
