@@ -1,8 +1,11 @@
 # coding: utf-8
+import nuwe_pyeccodes
+
 from nuwe_data_viewer.lib.plugin_system.plugin import PluginBase
 from nuwe_data_viewer.plugin.core.editor_system.editor_window import EditorWindow
 from nuwe_data_viewer.plugin.core.editor_system.editor_interface import EditorInterface
 from nuwe_data_viewer.plugin.core.editor_system.editor_view import EditorView
+from nuwe_data_viewer.plugin.grib_tool.grib_plotter import GribPlotter
 
 
 plugin_name = "plot_viewer"
@@ -47,12 +50,43 @@ class PlotViewerPlugin(PluginBase):
         self.current_plot_viewer = window.edit_area.view.editor.widget
 
         def change_current_plot_viewer():
-            self.current_plot_viewer = window.edit_area.view.editor.widget
+            self.current_plot_viewer = plot_viewer_widget
             print("set current plot viewer:", self.current_plot_viewer)
 
         window.window_activated.connect(change_current_plot_viewer)
 
+        def close_plot_viewer():
+            if self.current_plot_viewer == plot_viewer_widget:
+                self.current_plot_viewer = None
+
+        window.window_closed.connect(close_plot_viewer)
+
         window.show()
+
+    def add_contour_layer(self, data_node):
+        if self.current_plot_viewer is None:
+            self.add_new_plot_viewer()
+
+        file_info = data_node.file_info
+        message_number = data_node.message_count
+
+        grib_file = nuwe_pyeccodes.GribFileHandler()
+        grib_file.openFile(file_info.absoluteFilePath())
+        grib_message = None
+        for i in range(0, message_number):
+            grib_message = grib_file.next()
+
+        if grib_message is None:
+            print("ERROR when loading message: ", message_number)
+            return
+
+        grid_data = GribPlotter.generate_plot_data(grib_message)
+
+        from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
+        layer = ContourLayer('contour layer', 'contour.1')
+        layer.grid_data = grid_data
+        self.current_plot_viewer.plot_scene.append_layer(layer)
+        self.current_plot_viewer.update_renderer()
 
 
 plugin = PlotViewerPlugin()

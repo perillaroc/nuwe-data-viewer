@@ -7,6 +7,7 @@ from .editor_area import EditorArea
 
 class EditorWindow(QWidget):
     window_activated = pyqtSignal()
+    window_closed = pyqtSignal()
 
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)

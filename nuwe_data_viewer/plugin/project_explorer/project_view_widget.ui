@@ -62,7 +62,33 @@
      </action>
      <action name="action_view_chart">
          <property name="text">
-             <string>ViewChart</string>
+             <string>View Chart</string>
+         </property>
+     </action>
+     <action name="action_add_contour_layer">
+         <property name="text">
+             <string>Add contour layer</string>
+         </property>
+     </action>
+     <action name="action_add_fill_layer">
+         <property name="text">
+             <string>Add fill layer</string>
+         </property>
+     </action>
+     <action name="action_add_vector_layer">
+         <property name="text">
+             <string>Add vector layer</string>
+         </property>
+         <property name="toolTip">
+             <string>Add vector layer</string>
+         </property>
+     </action>
+     <action name="action_add_streamline_layer">
+         <property name="text">
+             <string>Add streamline layer</string>
+         </property>
+         <property name="toolTip">
+             <string>Add streamline layer</string>
          </property>
      </action>
  </widget>

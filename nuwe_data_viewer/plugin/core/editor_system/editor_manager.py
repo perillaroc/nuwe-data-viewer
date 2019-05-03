@@ -36,8 +36,13 @@ class EditorManager(QObject):
         if len(self.windows) == 0:
             self._remove_tab()
 
+        window.window_closed.emit()
+
     def slot_tab_activated(self, index):
-        self.windows[index].window_activated.emit()
+        if index == -1:
+            return
+        window = self.tab_widget.widget(index)
+        window.window_activated.emit()
 
     @pyqtSlot(int)
     def slot_tab_close(self, index):

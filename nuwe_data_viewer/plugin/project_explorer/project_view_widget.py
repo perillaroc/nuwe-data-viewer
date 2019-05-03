@@ -87,21 +87,19 @@ class ProjectViewWidget(QDockWidget):
         elif result_action == self.ui.action_read_file:
             self._read_grib_file(node)
 
-    def show_context_menu_for_field_node(self, global_point, item: FieldNode):
+    def show_context_menu_for_field_node(self, global_point, node: FieldNode):
         actions = [
-            self.ui.action_view_chart
+            self.ui.action_add_contour_layer,
+            self.ui.action_add_fill_layer,
+            self.ui.action_add_vector_layer,
+            self.ui.action_add_streamline_layer
         ]
 
         result_action = QMenu.exec(actions, global_point)
 
-        if result_action == self.ui.action_view_chart:
-            index_node = item.parent().child(item.index().row(), 0)
-            message_count = int(index_node.text())
-            file_info = index_node.data(FieldNode.FileInfoRole)
-            print('show chart in viewer: message {message_count} in {file_path}'.format(
-                message_count=message_count,
-                file_path=file_info.absoluteFilePath()
-            ))
+        if result_action == self.ui.action_add_contour_layer:
+            from nuwe_data_viewer.plugin.plot_viewer import plugin as plot_viewer_plugin
+            plot_viewer_plugin.add_contour_layer(node)
 
     def _read_grib_file(self, item: GribFileNode, reload=False):
         from nuwe_data_viewer.plugin.grib_tool.grib_reader import GribReader, FieldClassifyType
