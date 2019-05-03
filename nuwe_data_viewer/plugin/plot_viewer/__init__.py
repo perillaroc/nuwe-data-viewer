@@ -52,21 +52,33 @@ class PlotViewerPlugin(PluginBase):
         def change_current_plot_viewer():
             self.current_plot_viewer = plot_viewer_widget
             print("set current plot viewer:", self.current_plot_viewer)
-
         window.window_activated.connect(change_current_plot_viewer)
 
         def close_plot_viewer():
             if self.current_plot_viewer == plot_viewer_widget:
                 self.current_plot_viewer = None
-
         window.window_closed.connect(close_plot_viewer)
 
         window.show()
 
-    def add_contour_layer(self, data_node):
+    def add_fill_layer(self, data_node):
         if self.current_plot_viewer is None:
             self.add_new_plot_viewer()
 
+        grid_data = self._get_grid_data_form_node(data_node)
+        if grid_data is None:
+            print("ERROR when loading data from node: ", data_node)
+            return
+
+        from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
+        layer = ContourLayer('contour layer', 'contour.1')
+        layer.grid_data = grid_data
+        self.current_plot_viewer.plot_scene.append_layer(layer)
+
+        self.current_plot_viewer.update_renderer()
+
+    @classmethod
+    def _get_grid_data_form_node(cls, data_node):
         file_info = data_node.file_info
         message_number = data_node.message_count
 
@@ -78,15 +90,9 @@ class PlotViewerPlugin(PluginBase):
 
         if grib_message is None:
             print("ERROR when loading message: ", message_number)
-            return
-
+            return None
         grid_data = GribPlotter.generate_plot_data(grib_message)
-
-        from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
-        layer = ContourLayer('contour layer', 'contour.1')
-        layer.grid_data = grid_data
-        self.current_plot_viewer.plot_scene.append_layer(layer)
-        self.current_plot_viewer.update_renderer()
+        return grid_data
 
 
 plugin = PlotViewerPlugin()
