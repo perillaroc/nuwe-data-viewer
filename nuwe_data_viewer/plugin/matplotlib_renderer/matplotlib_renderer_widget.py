@@ -12,8 +12,8 @@ from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 
 from nuwe_data_viewer.plugin.plot_renderer.renderer_widget import PlotRendererWidget, PlotLayer
 from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
-from nuwe_data_viewer.plugin.matplotlib_renderer.UI_matplotlib_renderer_widget import (
-    Ui_MatplotlibRendererWidgetPlotWidget)
+
+from .UI_matplotlib_renderer_widget import Ui_MatplotlibRendererWidgetPlotWidget
 
 
 matplotlib.use('Qt5Agg')
@@ -40,12 +40,11 @@ class MatplotlibRendererWidget(PlotRendererWidget):
         self.ui.navi_bar_layout.addWidget(self.navigation_tool_bar)
         self.ui.canvas_layout.addWidget(self.canvas)
 
-    def clear_layers(self):
+    def clear_scene(self):
         self.canvas.fig.clf()
-        self.layers.clear()
 
-    def add_plot_layer(self, layer: PlotLayer):
-        self.layers.append(layer)
+    def set_plot_scene(self, plot_scene):
+        self.plot_scene = plot_scene
         self.render_plot()
 
     def render_plot(self):
@@ -57,7 +56,7 @@ class MatplotlibRendererWidget(PlotRendererWidget):
             projection=ccrs.PlateCarree(central_longitude=150)
         )
 
-        for a_layer in self.layers:
+        for a_layer in self.plot_scene.layers:
             self.render_plot_layer(a_layer)
 
         self.canvas.ax.coastlines()

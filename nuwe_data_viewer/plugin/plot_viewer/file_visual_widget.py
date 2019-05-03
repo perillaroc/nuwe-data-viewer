@@ -6,6 +6,7 @@ import nuwe_pyeccodes
 from nuwe_data_viewer.plugin.data_viewer.components.grib.content_widget import ContentWidget
 
 from nuwe_data_viewer.plugin.data_viewer.file_content_model import FileContentModel
+from nuwe_data_viewer.plugin.plot_renderer.plot.plot_scene import PlotScene
 from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
 from nuwe_data_viewer.plugin.grib_tool.grib_plotter import GribPlotter
 
@@ -61,7 +62,11 @@ class FileVisualWidget(QWidget):
 
         # plot message
         grid_data = GribPlotter.generate_plot_data(grib_message)
+
+        plot_scene = PlotScene()
         layer = ContourLayer('contour layer', 'contour.1')
         layer.grid_data = grid_data
-        self.plot_widget.clear_layers()
-        self.plot_widget.add_plot_layer(layer)
+        plot_scene.append_layer(layer)
+
+        self.plot_widget.clear_scene()
+        self.plot_widget.set_plot_scene(plot_scene)
