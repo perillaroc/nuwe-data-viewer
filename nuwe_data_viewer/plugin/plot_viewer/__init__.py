@@ -43,8 +43,16 @@ class PlotViewerPlugin(PluginBase):
         window.edit_area.set_current_view(view)
 
         self.main_window.editor_manager.add_window(window)
-        window.show()
+
         self.current_plot_viewer = window.edit_area.view.editor.widget
+
+        def change_current_plot_viewer():
+            self.current_plot_viewer = window.edit_area.view.editor.widget
+            print("set current plot viewer:", self.current_plot_viewer)
+
+        window.window_activated.connect(change_current_plot_viewer)
+
+        window.show()
 
 
 plugin = PlotViewerPlugin()
