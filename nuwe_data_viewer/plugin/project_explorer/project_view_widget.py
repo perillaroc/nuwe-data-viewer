@@ -97,9 +97,11 @@ class ProjectViewWidget(QDockWidget):
 
         result_action = QMenu.exec(actions, global_point)
 
+        from nuwe_data_viewer.plugin.plot_viewer import plugin as plot_viewer_plugin
         if result_action == self.ui.action_add_fill_layer:
-            from nuwe_data_viewer.plugin.plot_viewer import plugin as plot_viewer_plugin
             plot_viewer_plugin.add_fill_layer(node)
+        elif result_action == self.ui.action_add_contour_layer:
+            plot_viewer_plugin.add_contour_layer(node)
 
     def _read_grib_file(self, item: GribFileNode, reload=False):
         from nuwe_data_viewer.plugin.grib_tool.grib_reader import GribReader, FieldClassifyType

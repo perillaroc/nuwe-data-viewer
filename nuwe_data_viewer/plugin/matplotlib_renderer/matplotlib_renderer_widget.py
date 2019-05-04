@@ -72,13 +72,22 @@ class MatplotlibRendererWidget(PlotRendererWidget):
             print('layer is not supported:', layer)
 
     def _render_contour_layer(self, layer: ContourLayer):
-        cf = self.canvas.ax.contourf(
-            layer.grid_data.lons, layer.grid_data.lats, layer.grid_data.values,
-            transform=ccrs.PlateCarree(),
-            cmap='rainbow',
-            extend='both'
-        )
-        self.canvas.fig.colorbar(cf, orientation='horizontal')
+        if layer.fill:
+            cf = self.canvas.ax.contourf(
+                layer.grid_data.lons, layer.grid_data.lats, layer.grid_data.values,
+                transform=ccrs.PlateCarree(),
+                cmap='rainbow',
+                extend='both'
+            )
+            self.canvas.fig.colorbar(cf, orientation='horizontal')
+        else:
+            cf = self.canvas.ax.contour(
+                layer.grid_data.lons, layer.grid_data.lats, layer.grid_data.values,
+                transform=ccrs.PlateCarree(),
+                cmap='rainbow',
+                extend='both'
+            )
+            self.canvas.fig.colorbar(cf, orientation='horizontal')
         return cf
 
     def _render_grid(self):

@@ -71,7 +71,23 @@ class PlotViewerPlugin(PluginBase):
             return
 
         from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
-        layer = ContourLayer('contour layer', 'contour.1')
+        layer = ContourLayer('contour layer', 'contour.1', fill=True)
+        layer.grid_data = grid_data
+        self.current_plot_viewer.plot_scene.append_layer(layer)
+
+        self.current_plot_viewer.update_renderer()
+
+    def add_contour_layer(self, data_node):
+        if self.current_plot_viewer is None:
+            self.add_new_plot_viewer()
+
+        grid_data = self._get_grid_data_form_node(data_node)
+        if grid_data is None:
+            print("ERROR when loading data from node: ", data_node)
+            return
+
+        from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
+        layer = ContourLayer('contour layer', 'contour.1', fill=False)
         layer.grid_data = grid_data
         self.current_plot_viewer.plot_scene.append_layer(layer)
 
