@@ -2,13 +2,17 @@
 import nuwe_pyeccodes
 
 from nuwe_data_viewer.lib.plugin_system.plugin import PluginBase
+from nuwe_data_viewer.lib.util.logger import get_logger
 from nuwe_data_viewer.plugin.core.editor_system.editor_window import EditorWindow
 from nuwe_data_viewer.plugin.core.editor_system.editor_interface import EditorInterface
 from nuwe_data_viewer.plugin.core.editor_system.editor_view import EditorView
 from nuwe_data_viewer.plugin.grib_tool.grib_plotter import GribPlotter
 
+from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
+
 
 plugin_name = "plot_viewer"
+logger = get_logger(plugin_name)
 
 
 class PlotViewerPlugin(PluginBase):
@@ -51,7 +55,8 @@ class PlotViewerPlugin(PluginBase):
 
         def change_current_plot_viewer():
             self.current_plot_viewer = plot_viewer_widget
-            print("set current plot viewer:", self.current_plot_viewer)
+            logger.debug("set current plot viewer: {current_plot_viewer}".format(
+                current_plot_viewer=self.current_plot_viewer))
         window.window_activated.connect(change_current_plot_viewer)
 
         def close_plot_viewer():
@@ -67,10 +72,9 @@ class PlotViewerPlugin(PluginBase):
 
         grid_data = self._get_grid_data_form_node(data_node)
         if grid_data is None:
-            print("ERROR when loading data from node: ", data_node)
+            logger.error("can't load data from node: {data_node}".format(data_node=data_node))
             return
 
-        from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
         layer = ContourLayer('contour layer', 'contour.1', fill=True)
         layer.grid_data = grid_data
         self.current_plot_viewer.plot_scene.append_layer(layer)
@@ -83,10 +87,9 @@ class PlotViewerPlugin(PluginBase):
 
         grid_data = self._get_grid_data_form_node(data_node)
         if grid_data is None:
-            print("ERROR when loading data from node: ", data_node)
+            logger.error("can't load data from node: {data_node}".format(data_node=data_node))
             return
 
-        from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
         layer = ContourLayer('contour layer', 'contour.1', fill=False)
         layer.grid_data = grid_data
         self.current_plot_viewer.plot_scene.append_layer(layer)
@@ -105,7 +108,7 @@ class PlotViewerPlugin(PluginBase):
             grib_message = grib_file.next()
 
         if grib_message is None:
-            print("ERROR when loading message: ", message_number)
+            logger.error("can't load message: {data_node}".format(data_node=data_node))
             return None
         grid_data = GribPlotter.generate_plot_data(grib_message)
         return grid_data
