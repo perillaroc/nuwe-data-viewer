@@ -30,7 +30,7 @@ class PlotViewerPlugin(PluginBase):
         self.main_window.ui.action_new_plot.triggered.connect(self.add_new_plot_viewer)
 
     def plugin_initialized(self):
-        pass
+        self.add_new_plot_viewer()
 
     def plugin_about_to_shutdown(self):
         pass

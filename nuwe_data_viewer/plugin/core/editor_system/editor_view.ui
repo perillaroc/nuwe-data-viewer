@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>EditorView</class>
+    <widget class="QWidget" name="EditorView">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>552</width>
+                <height>404</height>
+            </rect>
+        </property>
+        <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+            </sizepolicy>
+        </property>
+        <property name="windowTitle">
+            <string>Editor View</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+                <widget class="QStackedWidget" name="container">
+                    <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="styleSheet">
+                        <string notr="true">background-color: rgb(170, 0, 255);</string>
+                    </property>
+                    <widget class="QWidget" name="empty_page">
+                        <layout class="QGridLayout" name="gridLayout">
+                            <property name="leftMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="spacing">
+                                <number>0</number>
+                            </property>
+                            <item row="0" column="0">
+                                <widget class="QLabel" name="label">
+                                    <property name="text">
+                                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span
+                                            style=&quot; font-size:20pt; color:#8d8d8d;&quot;&gt;Open a document&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+                                        </string>
+                                    </property>
+                                </widget>
+                            </item>
+                        </layout>
+                    </widget>
+                </widget>
+            </item>
+        </layout>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>

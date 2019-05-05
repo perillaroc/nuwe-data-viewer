@@ -1,7 +1,10 @@
 # coding: utf-8
 from nuwe_data_viewer.lib.plugin_system.plugin import PluginBase
+from nuwe_data_viewer.lib.util.logger import get_logger
+
 
 plugin_name = "matplotlib_renderer"
+logger = get_logger(plugin_name)
 
 
 class MatplotlibRendererPlugin(PluginBase):

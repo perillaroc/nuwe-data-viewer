@@ -1,10 +1,10 @@
 # coding: utf-8
 import datetime
 
-from PyQt5 import QtWidgets
 import matplotlib
+from matplotlib.backends.qt_compat import QtWidgets
 from matplotlib.backends.backend_qt5agg import (
-    FigureCanvasQTAgg as Canvas, NavigationToolbar2QT as NavigationToolbar)
+    FigureCanvas as Canvas, NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.figure import Figure
 import matplotlib.ticker as mticker
 import cartopy.crs as ccrs
@@ -13,7 +13,7 @@ from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 from nuwe_data_viewer.plugin.plot_renderer.renderer_widget import PlotRendererWidget, PlotLayer
 from nuwe_data_viewer.plugin.plot_renderer.plot.contour_layer import ContourLayer
 
-from .UI_matplotlib_renderer_widget import Ui_MatplotlibRendererWidgetPlotWidget
+from nuwe_data_viewer.plugin.matplotlib_renderer import logger
 
 
 matplotlib.use('Qt5Agg')
@@ -30,14 +30,15 @@ class PlotCanvas(Canvas):
 
 class MatplotlibRendererWidget(PlotRendererWidget):
     def __init__(self, parent=None):
-        PlotRendererWidget.__init__(self, parent)
+        super(MatplotlibRendererWidget, self).__init__(parent)
+        from .UI_matplotlib_renderer_widget import Ui_MatplotlibRendererWidgetPlotWidget
         self.ui = Ui_MatplotlibRendererWidgetPlotWidget()
         self.ui.setupUi(self)
 
-        self.canvas = PlotCanvas()
-        self.navigation_tool_bar = NavigationToolbar(self.canvas, self)
+        # self.navigation_tool_bar = NavigationToolbar(self.canvas, self)
+        # self.ui.navi_bar_layout.addWidget(self.navigation_tool_bar)
 
-        self.ui.navi_bar_layout.addWidget(self.navigation_tool_bar)
+        self.canvas = PlotCanvas()
         self.ui.canvas_layout.addWidget(self.canvas)
 
     def clear_scene(self):
@@ -48,7 +49,7 @@ class MatplotlibRendererWidget(PlotRendererWidget):
         self.render_plot()
 
     def render_plot(self):
-        print('plot begin:', datetime.datetime.utcnow())
+        logger.info('plot begin: {time}'.format(time=datetime.datetime.utcnow()))
         self.canvas.fig.clf()
 
         self.canvas.ax = self.canvas.fig.add_subplot(
@@ -63,13 +64,13 @@ class MatplotlibRendererWidget(PlotRendererWidget):
         self._render_grid()
 
         self.canvas.draw()
-        print('plot end:', datetime.datetime.utcnow())
+        logger.info('plot end: {time}'.format(time=datetime.datetime.utcnow()))
 
     def render_plot_layer(self, layer: PlotLayer):
         if isinstance(layer, ContourLayer):
             self._render_contour_layer(layer)
         else:
-            print('layer is not supported:', layer)
+            logger.warn('layer is not supported: {layer}'.format(layer=layer))
 
     def _render_contour_layer(self, layer: ContourLayer):
         if layer.fill:
