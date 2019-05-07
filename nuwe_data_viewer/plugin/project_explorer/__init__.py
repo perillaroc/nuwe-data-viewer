@@ -2,11 +2,11 @@
 from PyQt5.QtCore import Qt
 
 from nuwe_data_viewer.lib.plugin_system.plugin import PluginBase
+from nuwe_data_viewer.lib.util.logger import get_logger
 
-from nuwe_data_viewer.plugin.project_explorer.model.project_model import ProjectModel
-from nuwe_data_viewer.plugin.project_explorer.project_view_widget import ProjectViewWidget
 
 plugin_name = "project_explorer"
+logger = get_logger(plugin_name)
 
 
 class ProjectExplorerPlugin(PluginBase):
@@ -17,6 +17,8 @@ class ProjectExplorerPlugin(PluginBase):
         self.core_plugin = None
 
     def initialize_plugin(self):
+        from nuwe_data_viewer.plugin.project_explorer.model.project_model import ProjectModel
+        from nuwe_data_viewer.plugin.project_explorer.project_view_widget import ProjectViewWidget
         from nuwe_data_viewer.plugin.core import plugin as core_plugin
         self.core_plugin = core_plugin
 

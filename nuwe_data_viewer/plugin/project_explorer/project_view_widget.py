@@ -6,6 +6,7 @@ from .UI_project_view_widget import Ui_ProjectViewWidget
 from .model.project_model import ProjectModel, ProjectItemType
 from .model.data_node import GribFileNode
 from .model.field_node import FieldNode
+from nuwe_data_viewer.plugin.project_explorer import logger
 
 from nuwe_data_viewer.plugin.data_viewer.file_content_widget import FileContentWidget
 from nuwe_data_viewer.plugin.plot_viewer.file_visual_widget import FileVisualWidget
@@ -43,8 +44,9 @@ class ProjectViewWidget(QDockWidget):
     @pyqtSlot(bool)
     def slot_open_grib2_file(self, checked):
         file_path, file_type = QFileDialog.getOpenFileName(self, "Open a grib2 file")
-        print("file path", file_path)
-        self.add_file(file_type, file_path)
+        logger.info("file path: {file_path}".format(file_path=file_path))
+        if len(file_path) != 0:
+            self.add_file(file_type, file_path)
 
     @pyqtSlot(QModelIndex)
     def slot_project_view_double_clicked(self, index: QModelIndex):
