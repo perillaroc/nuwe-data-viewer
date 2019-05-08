@@ -87,7 +87,7 @@ class MatplotlibRendererWidget(PlotRendererWidget):
             cf = self.canvas.ax.contour(
                 layer.grid_data.lons, layer.grid_data.lats, layer.grid_data.values,
                 transform=ccrs.PlateCarree(),
-                cmap='rainbow',
+                cmap='RdBu',
                 extend='both'
             )
 
