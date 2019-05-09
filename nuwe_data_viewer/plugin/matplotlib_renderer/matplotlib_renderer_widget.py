@@ -8,8 +8,6 @@ from matplotlib.backends.backend_qt5agg import (
 from matplotlib.figure import Figure
 import matplotlib.ticker as mticker
 
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-
 import cartopy.crs as ccrs
 from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 
@@ -81,14 +79,16 @@ class MatplotlibRendererWidget(PlotRendererWidget):
                 layer.grid_data.lons, layer.grid_data.lats, layer.grid_data.values,
                 transform=ccrs.PlateCarree(),
                 cmap='rainbow',
-                extend='both'
+                extend='both',
+                levels=20
             )
         else:
             cf = self.canvas.ax.contour(
                 layer.grid_data.lons, layer.grid_data.lats, layer.grid_data.values,
                 transform=ccrs.PlateCarree(),
                 cmap='RdBu',
-                extend='both'
+                extend='both',
+                levels=20
             )
 
         self.canvas.fig.colorbar(cf, fraction=0.035, pad=0.04)
