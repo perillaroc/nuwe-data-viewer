@@ -9,5 +9,11 @@ class ContourLayer(PlotLayer):
         self.grid_data = None
         self.fill = fill
 
+        self.levels = None
+        self.colors = None
+        self.color_map = None
+        self.line_width = None
+        self.line_type = None
+
     def set_data(self, grid_data: GridData):
         self.grid_data = grid_data
